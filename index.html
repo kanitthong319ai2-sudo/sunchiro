@@ -181,5 +181,147 @@ function copyPrompt(){
  }
 }
 </script>
+ 
+<!-- Supabase Login: AI Multimedia Learning Hub -->
+<script type="module">
+import { createClient } from
+  'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+const SUPABASE_URL = 'https://dmjeovprirkuhixpnqrs.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_Fi3LdMawtOAmOkTcoFuk5g_APkDBSt-';
+
+const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const style = document.createElement('style');
+style.textContent = `
+#hub-login-btn {
+  background:#174b83;color:white;border:0;border-radius:8px;
+  padding:10px 18px;font-weight:600;cursor:pointer;
+}
+#hub-login-overlay {
+  display:none;position:fixed;inset:0;background:#0009;
+  z-index:99999;align-items:center;justify-content:center;padding:20px;
+}
+#hub-login-box {
+  background:white;color:#172033;width:100%;max-width:390px;
+  padding:28px;border-radius:16px;box-shadow:0 15px 50px #0004;
+  font-family:inherit;
+}
+#hub-login-box input {
+  width:100%;box-sizing:border-box;padding:12px;margin:7px 0 15px;
+  border:1px solid #ccd3df;border-radius:8px;font-size:15px;
+}
+#hub-login-box button {
+  padding:11px 16px;border:0;border-radius:8px;cursor:pointer;
+}
+#hub-login-submit {background:#174b83;color:white;width:100%;}
+#hub-login-close {background:#eee;color:#333;width:100%;margin-top:10px;}
+#hub-login-message {font-size:14px;margin-top:12px;line-height:1.5;}
+`;
+document.head.appendChild(style);
+
+const overlay = document.createElement('div');
+overlay.id = 'hub-login-overlay';
+overlay.innerHTML = `
+  <div id="hub-login-box">
+    <h2 style="margin-top:0">เข้าสู่ระบบ</h2>
+    <p>AI Multimedia Learning Hub</p>
+    <form id="hub-login-form">
+      <label>อีเมล</label>
+      <input id="hub-email" type="email" required
+        autocomplete="username" placeholder="กรอกอีเมล">
+      <label>รหัสผ่าน</label>
+      <input id="hub-password" type="password" required
+        autocomplete="current-password" placeholder="กรอกรหัสผ่าน">
+      <button id="hub-login-submit" type="submit">เข้าสู่ระบบ</button>
+    </form>
+    <div id="hub-login-message" role="status"></div>
+    <button id="hub-login-close" type="button">ปิด</button>
+  </div>
+`;
+document.body.appendChild(overlay);
+
+const nav = document.querySelector('.navlinks') || document.querySelector('nav');
+const loginBtn = document.createElement('button');
+loginBtn.id = 'hub-login-btn';
+loginBtn.textContent = 'เข้าสู่ระบบ';
+if (nav) nav.appendChild(loginBtn);
+else {
+  loginBtn.style.cssText =
+    'position:fixed;right:20px;bottom:20px;z-index:9999;';
+  document.body.appendChild(loginBtn);
+}
+
+const message = document.getElementById('hub-login-message');
+const form = document.getElementById('hub-login-form');
+
+loginBtn.addEventListener('click', () => {
+  overlay.style.display = 'flex';
+});
+
+document.getElementById('hub-login-close').onclick = () => {
+  overlay.style.display = 'none';
+};
+
+overlay.addEventListener('click', e => {
+  if (e.target === overlay) overlay.style.display = 'none';
+});
+
+form.addEventListener('submit', async e => {
+  e.preventDefault();
+  const submit = document.getElementById('hub-login-submit');
+  submit.disabled = true;
+  submit.textContent = 'กำลังตรวจสอบ...';
+  message.textContent = '';
+
+  try {
+    const email = document.getElementById('hub-email').value.trim();
+    const password = document.getElementById('hub-password').value;
+
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email, password
+    });
+    if (error) throw error;
+
+    const user = data.user;
+    const { data: profile, error: profileError } = await supabase
+      .from('profiles')
+      .select('full_name, role, status')
+      .eq('id', user.id)
+      .single();
+
+    if (profileError || !profile) {
+      await supabase.auth.signOut();
+      throw new Error('ไม่พบข้อมูลโปรไฟล์ กรุณาติดต่อผู้ดูแลระบบ');
+    }
+
+    if (profile.status !== 'approved') {
+      await supabase.auth.signOut();
+      throw new Error('บัญชีนี้ยังไม่ได้รับอนุมัติให้เข้าใช้งาน');
+    }
+
+    if (!['admin', 'instructor', 'student'].includes(profile.role)) {
+      await supabase.auth.signOut();
+      throw new Error('ไม่พบบทบาทผู้ใช้งานที่ถูกต้อง');
+    }
+
+    message.textContent =
+      `เข้าสู่ระบบสำเร็จ: ${profile.full_name || email} (${profile.role})`;
+
+    loginBtn.textContent = 'ออกจากระบบ';
+    loginBtn.onclick = async () => {
+      await supabase.auth.signOut();
+      location.reload();
+    };
+
+  } catch (err) {
+    message.textContent = err.message || 'เข้าสู่ระบบไม่สำเร็จ';
+  } finally {
+    submit.disabled = false;
+    submit.textContent = 'เข้าสู่ระบบ';
+  }
+});
+</script>
+
 </body>
 </html>
