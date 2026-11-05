@@ -182,145 +182,219 @@ function copyPrompt(){
 }
 </script>
  
-<!-- Supabase Login: AI Multimedia Learning Hub -->
+<!-- Supabase Authentication + Role Dashboards -->
 <script type="module">
-import { createClient } from
-  'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
 const SUPABASE_URL = 'https://dmjeovprirkuhixpnqrs.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_Fi3LdMawtOAmOkTcoFuk5g_APkDBSt-';
-
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-const style = document.createElement('style');
-style.textContent = `
-#hub-login-btn {
-  background:#174b83;color:white;border:0;border-radius:8px;
-  padding:10px 18px;font-weight:600;cursor:pointer;
-}
-#hub-login-overlay {
-  display:none;position:fixed;inset:0;background:#0009;
-  z-index:99999;align-items:center;justify-content:center;padding:20px;
-}
-#hub-login-box {
-  background:white;color:#172033;width:100%;max-width:390px;
-  padding:28px;border-radius:16px;box-shadow:0 15px 50px #0004;
-  font-family:inherit;
-}
-#hub-login-box input {
-  width:100%;box-sizing:border-box;padding:12px;margin:7px 0 15px;
-  border:1px solid #ccd3df;border-radius:8px;font-size:15px;
-}
-#hub-login-box button {
-  padding:11px 16px;border:0;border-radius:8px;cursor:pointer;
-}
-#hub-login-submit {background:#174b83;color:white;width:100%;}
-#hub-login-close {background:#eee;color:#333;width:100%;margin-top:10px;}
-#hub-login-message {font-size:14px;margin-top:12px;line-height:1.5;}
+const css = document.createElement('style');
+css.textContent = `
+#hub-login-btn{background:#174b83;color:#fff;border:0;border-radius:8px;padding:10px 18px;font-weight:600;cursor:pointer}
+#hub-login-overlay{display:none;position:fixed;inset:0;background:#0009;z-index:99999;align-items:center;justify-content:center;padding:20px}
+#hub-login-box{background:#fff;color:#172033;width:100%;max-width:390px;padding:28px;border-radius:16px;box-shadow:0 15px 50px #0004;font-family:inherit}
+#hub-login-box input{width:100%;box-sizing:border-box;padding:12px;margin:7px 0 15px;border:1px solid #ccd3df;border-radius:8px;font-size:15px}
+#hub-login-box button{padding:11px 16px;border:0;border-radius:8px;cursor:pointer}
+#hub-login-submit{background:#174b83;color:white;width:100%}#hub-login-close{background:#eee;color:#333;width:100%;margin-top:10px}
+#hub-login-message{font-size:14px;margin-top:12px;line-height:1.5}
+#hub-dashboard{display:none;max-width:1150px;margin:35px auto;padding:0 22px 50px}
+.hub-head{background:linear-gradient(120deg,#10233f,#174b83);color:white;border-radius:18px;padding:25px;margin-bottom:20px}
+.hub-head h2{color:white;margin:0}.hub-head p{margin:5px 0 0;color:#dbeafe}
+.hub-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}
+.hub-tabs button,.hub-action{border:0;border-radius:9px;padding:9px 14px;background:#e8f1ff;color:#174b83;font-weight:600;cursor:pointer}
+.hub-tabs button.active,.hub-action.primary{background:#174b83;color:white}
+.hub-panel{background:#fff;border:1px solid #e6ebf3;border-radius:15px;padding:20px;margin:12px 0;overflow:auto}
+.hub-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+.hub-stat{background:#f3f7fd;border-radius:12px;padding:15px}.hub-stat b{font-size:25px;color:#174b83;display:block}
+.hub-table{width:100%;border-collapse:collapse;font-size:13px}.hub-table th,.hub-table td{padding:10px;border-bottom:1px solid #e8edf4;text-align:left;vertical-align:top}
+.hub-table th{background:#f4f7fc;color:#30435e;white-space:nowrap}
+.hub-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin:12px 0}
+.hub-form input,.hub-form textarea,.hub-form select{width:100%;padding:10px;border:1px solid #ccd5e2;border-radius:8px;font:inherit}
+.hub-form textarea{min-height:75px}.hub-muted{color:#64748b;font-size:13px}
+.hub-badge{display:inline-block;padding:3px 8px;border-radius:20px;background:#edf4ff;color:#2455a0;font-size:12px}
+.hub-danger{background:#fff0f0!important;color:#a11!important}
+@media(max-width:600px){.hub-panel{padding:13px}.hub-table{min-width:600px}}
 `;
-document.head.appendChild(style);
+document.head.appendChild(css);
 
 const overlay = document.createElement('div');
 overlay.id = 'hub-login-overlay';
-overlay.innerHTML = `
-  <div id="hub-login-box">
-    <h2 style="margin-top:0">เข้าสู่ระบบ</h2>
-    <p>AI Multimedia Learning Hub</p>
-    <form id="hub-login-form">
-      <label>อีเมล</label>
-      <input id="hub-email" type="email" required
-        autocomplete="username" placeholder="กรอกอีเมล">
-      <label>รหัสผ่าน</label>
-      <input id="hub-password" type="password" required
-        autocomplete="current-password" placeholder="กรอกรหัสผ่าน">
-      <button id="hub-login-submit" type="submit">เข้าสู่ระบบ</button>
-    </form>
-    <div id="hub-login-message" role="status"></div>
-    <button id="hub-login-close" type="button">ปิด</button>
-  </div>
-`;
+overlay.innerHTML = `<div id="hub-login-box"><h2 style="margin-top:0">เข้าสู่ระบบ</h2><p>AI Multimedia Learning Hub</p>
+<form id="hub-login-form"><label>อีเมล</label><input id="hub-email" type="email" required autocomplete="username" placeholder="กรอกอีเมล">
+<label>รหัสผ่าน</label><input id="hub-password" type="password" required autocomplete="current-password" placeholder="กรอกรหัสผ่าน">
+<button id="hub-login-submit" type="submit">เข้าสู่ระบบ</button></form><div id="hub-login-message" role="status"></div>
+<button id="hub-login-close" type="button">ปิด</button></div>`;
 document.body.appendChild(overlay);
 
-const nav = document.querySelector('.navlinks') || document.querySelector('nav');
+const nav = document.querySelector('.navlinks') || document.querySelector('.navin');
 const loginBtn = document.createElement('button');
 loginBtn.id = 'hub-login-btn';
 loginBtn.textContent = 'เข้าสู่ระบบ';
 if (nav) nav.appendChild(loginBtn);
-else {
-  loginBtn.style.cssText =
-    'position:fixed;right:20px;bottom:20px;z-index:9999;';
-  document.body.appendChild(loginBtn);
+else { loginBtn.style.cssText='position:fixed;right:20px;bottom:20px;z-index:9999'; document.body.appendChild(loginBtn); }
+
+const dashboard = document.createElement('main');
+dashboard.id = 'hub-dashboard';
+dashboard.innerHTML = `<div class="hub-head"><h2 id="hub-welcome">Learning Dashboard</h2><p id="hub-role"></p></div>
+<div class="hub-tabs" id="hub-tabs"></div><div id="hub-content"></div>`;
+const footer = document.querySelector('footer');
+if (footer) footer.before(dashboard); else document.body.appendChild(dashboard);
+
+const msg = document.getElementById('hub-login-message');
+const form = document.getElementById('hub-login-form');
+let currentProfile = null;
+let currentTab = '';
+
+function showLogin(){ overlay.style.display='flex'; }
+function closeLogin(){ overlay.style.display='none'; }
+loginBtn.addEventListener('click', async () => {
+  if (currentProfile) { await doLogout(); } else showLogin();
+});
+document.getElementById('hub-login-close').addEventListener('click', closeLogin);
+overlay.addEventListener('click', e => { if(e.target===overlay) closeLogin(); });
+
+function esc(v){return String(v ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function statusLabel(v){return ({approved:'อนุมัติแล้ว',pending:'รออนุมัติ',rejected:'ไม่อนุมัติ',active:'ใช้งาน',completed:'สำเร็จ',submitted:'ส่งแล้ว',graded:'ตรวจแล้ว'})[v] || v || '-';}
+function table(headers, rows){return `<div style="overflow:auto"><table class="hub-table"><thead><tr>${headers.map(x=>`<th>${x}</th>`).join('')}</tr></thead><tbody>${rows.length?rows.join(''):`<tr><td colspan="${headers.length}" class="hub-muted">ยังไม่มีข้อมูล</td></tr>`}</tbody></table></div>`;}
+function panel(title, body){return `<section class="hub-panel"><h3 style="margin:0 0 12px">${title}</h3>${body}</section>`;}
+function stat(label,n){return `<div class="hub-stat"><span class="hub-muted">${label}</span><b>${n}</b></div>`;}
+async function getRows(tableName, select='*', filters=[]){
+  let q=supabase.from(tableName).select(select);
+  for(const f of filters) q=q.eq(f[0],f[1]);
+  const {data,error}=await q;
+  if(error) throw error;
+  return data||[];
+}
+async function countRows(tableName, filters=[]){return (await getRows(tableName,'*',filters)).length;}
+function setTab(tab){currentTab=tab; renderDashboard();}
+function tabs(items){document.getElementById('hub-tabs').innerHTML=items.map(([id,label])=>`<button data-tab="${id}" class="${currentTab===id?'active':''}">${label}</button>`).join('');
+ document.querySelectorAll('#hub-tabs button').forEach(b=>b.addEventListener('click',()=>setTab(b.dataset.tab)));}
+
+async function renderDashboard(){
+ const p=currentProfile, role=p.role, root=document.getElementById('hub-content');
+ root.innerHTML='<div class="hub-panel">กำลังโหลดข้อมูล...</div>';
+ try{
+  if(role==='admin') await renderAdmin(root);
+  else if(role==='instructor') await renderInstructor(root);
+  else await renderStudent(root);
+  document.querySelectorAll('#hub-tabs button').forEach(b=>b.classList.toggle('active',b.dataset.tab===currentTab));
+ }catch(e){root.innerHTML=panel('เกิดข้อผิดพลาด',`<p>${esc(e.message)}</p><p class="hub-muted">ระบบจะแสดงเฉพาะข้อมูลที่ Supabase RLS อนุญาต</p>`);}
+}
+async function renderAdmin(root){
+ const items=[['overview','ภาพรวม'],['users','สมาชิก'],['courses','หลักสูตร'],['submissions','งานที่ส่ง']];
+ if(!items.some(x=>x[0]===currentTab)) currentTab='overview';
+ tabs(items);
+ if(currentTab==='overview'){
+  const [users,courses,lessons,enrollments,subs]=await Promise.all(['profiles','courses','lessons','enrollments','submissions'].map(t=>countRows(t)));
+  root.innerHTML=panel('ภาพรวมระบบ',`<div class="hub-grid">${stat('สมาชิก',users)}${stat('หลักสูตร',courses)}${stat('บทเรียน',lessons)}${stat('การลงทะเบียน',enrollments)}${stat('การส่งงาน',subs)}</div>`);
+ }else if(currentTab==='users'){
+  const users=await getRows('profiles','id,email,full_name,role,status,created_at');
+  root.innerHTML=panel('จัดการสมาชิก',table(['ชื่อ','อีเมล','บทบาท','สถานะ','การดำเนินการ'],users.map(u=>`<tr><td>${esc(u.full_name)}</td><td>${esc(u.email)}</td><td>${esc(u.role)}</td><td>${esc(statusLabel(u.status))}</td><td>${u.status!=='approved'?`<button class="hub-action primary" data-approve="${esc(u.id)}">อนุมัติ</button>`:''}</td></tr>`)));
+  root.querySelectorAll('[data-approve]').forEach(b=>b.addEventListener('click',()=>approveUser(b.dataset.approve)));
+ }else if(currentTab==='courses'){
+  const courses=await getRows('courses','id,title,slug,published,created_by,created_at');
+  root.innerHTML=panel('หลักสูตรทั้งหมด',table(['ชื่อหลักสูตร','Slug','เผยแพร่','ผู้สร้าง'],courses.map(c=>`<tr><td>${esc(c.title)}</td><td>${esc(c.slug)}</td><td>${c.published?'เผยแพร่':'ฉบับร่าง'}</td><td>${esc(c.created_by)}</td></tr>`)));
+ }else{
+  const rows=await getRows('submissions','id,assignment_id,student_id,status,grade,submitted_at');
+  root.innerHTML=panel('รายการส่งงาน',table(['ผู้เรียน','งาน','สถานะ','คะแนน','วันที่ส่ง'],rows.map(s=>`<tr><td>${esc(s.student_id)}</td><td>${esc(s.assignment_id)}</td><td>${esc(statusLabel(s.status))}</td><td>${esc(s.grade)}</td><td>${esc(s.submitted_at)}</td></tr>`)));
+ }
+}
+async function approveUser(id){
+ if(!confirm('ยืนยันอนุมัติบัญชีนี้?')) return;
+ const {error}=await supabase.from('profiles').update({status:'approved'}).eq('id',id);
+ if(error){alert('อนุมัติไม่สำเร็จ: '+error.message);return;}
+ alert('อนุมัติสมาชิกแล้ว');renderDashboard();
+}
+async function renderInstructor(root){
+ const courses=await getRows('courses','id,title,slug,description,published,created_by,created_at',[['created_by',currentProfile.id]]);
+ const items=[['overview','ภาพรวม'],['courses','หลักสูตรของฉัน'],['lessons','บทเรียน'],['submissions','ตรวจงาน']];
+ if(!items.some(x=>x[0]===currentTab)) currentTab='overview';
+ tabs(items);
+ if(currentTab==='overview'){
+  const courseIds=courses.map(c=>c.id);
+  const lessons=courseIds.length?(await getRows('lessons')).filter(l=>courseIds.includes(l.course_id)):[];
+  const subs=await getRows('submissions');
+  root.innerHTML=panel('ภาพรวมผู้สอน',`<div class="hub-grid">${stat('หลักสูตรของฉัน',courses.length)}${stat('บทเรียน',lessons.length)}${stat('งานที่ส่งทั้งหมด',subs.length)}</div>`);
+ }else if(currentTab==='courses'){
+  root.innerHTML=panel('หลักสูตรของฉัน',`<form id="course-create" class="hub-form"><input name="title" required placeholder="ชื่อหลักสูตร"><input name="slug" placeholder="slug (ไม่บังคับ)"><textarea name="description" placeholder="รายละเอียดหลักสูตร"></textarea><button class="hub-action primary">สร้างหลักสูตร</button></form>`+table(['ชื่อหลักสูตร','สถานะ','วันที่สร้าง'],courses.map(c=>`<tr><td>${esc(c.title)}</td><td>${c.published?'เผยแพร่':'ฉบับร่าง'}</td><td>${esc(c.created_at)}</td></tr>`)));
+  document.getElementById('course-create').addEventListener('submit',async e=>{e.preventDefault();const f=new FormData(e.target);const title=f.get('title').trim();const slug=(f.get('slug')||title).trim().toLowerCase().replace(/[^a-z0-9ก-๙]+/g,'-');const {error}=await supabase.from('courses').insert({title,slug,description:f.get('description'),created_by:currentProfile.id,published:false});if(error)alert('สร้างหลักสูตรไม่สำเร็จ: '+error.message);else{alert('สร้างหลักสูตรแล้ว');renderDashboard();}});
+ }else if(currentTab==='lessons'){
+  const ids=courses.map(c=>c.id);
+  const lessons=ids.length?(await getRows('lessons')).filter(l=>ids.includes(l.course_id)):[];
+  root.innerHTML=panel('บทเรียน',`<form id="lesson-create" class="hub-form"><select name="course_id" required><option value="">เลือกหลักสูตร</option>${courses.map(c=>`<option value="${esc(c.id)}">${esc(c.title)}</option>`).join('')}</select><input name="title" required placeholder="ชื่อบทเรียน"><input name="position" type="number" min="1" value="1"><textarea name="content" placeholder="เนื้อหาบทเรียน"></textarea><button class="hub-action primary">เพิ่มบทเรียน</button></form>`+table(['บทเรียน','หลักสูตร','ลำดับ','เผยแพร่'],lessons.map(l=>`<tr><td>${esc(l.title)}</td><td>${esc(courses.find(c=>c.id===l.course_id)?.title)}</td><td>${esc(l.position)}</td><td>${l.is_published?'เผยแพร่':'ฉบับร่าง'}</td></tr>`)));
+  document.getElementById('lesson-create').addEventListener('submit',async e=>{e.preventDefault();const f=new FormData(e.target);const {error}=await supabase.from('lessons').insert({course_id:f.get('course_id'),title:f.get('title'),position:Number(f.get('position')),content:f.get('content'),is_published:false});if(error)alert('เพิ่มบทเรียนไม่สำเร็จ: '+error.message);else{alert('เพิ่มบทเรียนแล้ว');renderDashboard();}});
+ }else{
+  const all=await getRows('submissions','id,assignment_id,student_id,status,grade,feedback,submitted_at');
+  const assign=await getRows('assignments','id,lesson_id,title');
+  const lessonIds=(await getRows('lessons','id,course_id')).filter(l=>courses.some(c=>c.id===l.course_id)).map(l=>l.id);
+  const assignmentIds=assign.filter(a=>lessonIds.includes(a.lesson_id)).map(a=>a.id);
+  const rows=all.filter(s=>assignmentIds.includes(s.assignment_id));
+  root.innerHTML=panel('งานที่ส่งในหลักสูตรของฉัน',table(['ผู้เรียน','งาน','สถานะ','คะแนน','Feedback'],rows.map(s=>`<tr><td>${esc(s.student_id)}</td><td>${esc(assign.find(a=>a.id===s.assignment_id)?.title)}</td><td>${esc(statusLabel(s.status))}</td><td>${esc(s.grade)}</td><td>${esc(s.feedback)}</td></tr>`)));
+ }
+}
+async function renderStudent(root){
+ const enroll=await getRows('enrollments','id,course_id,status,enrolled_at',[['user_id',currentProfile.id]]);
+ const courseIds=enroll.filter(e=>e.status==='active').map(e=>e.course_id);
+ const courses=courseIds.length?(await getRows('courses','id,title,description,published')).filter(c=>courseIds.includes(c.id)&&c.published):[];
+ const items=[['overview','ภาพรวม'],['courses','หลักสูตรของฉัน'],['assignments','งานที่ได้รับ'],['progress','ความก้าวหน้า']];
+ if(!items.some(x=>x[0]===currentTab)) currentTab='overview';
+ tabs(items);
+ const lessons=courseIds.length?(await getRows('lessons','id,course_id,title,position,is_published')).filter(l=>courseIds.includes(l.course_id)&&l.is_published):[];
+ if(currentTab==='overview'){
+  const progress=await getRows('lesson_progress','id,lesson_id,status,completed_at',[['user_id',currentProfile.id]]);
+  root.innerHTML=panel('ภาพรวมการเรียน',`<div class="hub-grid">${stat('หลักสูตรที่ลงทะเบียน',courses.length)}${stat('บทเรียนที่เปิดเรียน',lessons.length)}${stat('บทเรียนที่บันทึกความก้าวหน้า',progress.length)}</div>`);
+ }else if(currentTab==='courses'){
+  root.innerHTML=panel('หลักสูตรของฉัน',table(['หลักสูตร','รายละเอียด','สถานะ'],courses.map(c=>`<tr><td>${esc(c.title)}</td><td>${esc(c.description)}</td><td><span class="hub-badge">ลงทะเบียนแล้ว</span></td></tr>`))+panel('บทเรียนที่เปิดให้เรียน',table(['บทเรียน','หลักสูตร','ลำดับ'],lessons.map(l=>`<tr><td>${esc(l.title)}</td><td>${esc(courses.find(c=>c.id===l.course_id)?.title)}</td><td>${esc(l.position)}</td></tr>`)));
+ }else if(currentTab==='assignments'){
+  const lessonIds=lessons.map(l=>l.id);
+  const assignments=lessonIds.length?(await getRows('assignments')).filter(a=>lessonIds.includes(a.lesson_id)):[];
+  const submissions=await getRows('submissions','id,assignment_id,status,grade,submitted_at',[['student_id',currentProfile.id]]);
+  root.innerHTML=panel('งานที่ได้รับ',table(['งาน','กำหนดส่ง','สถานะ','คะแนน'],assignments.map(a=>{const s=submissions.find(x=>x.assignment_id===a.id);return `<tr><td>${esc(a.title)}<br><span class="hub-muted">${esc(a.description)}</span></td><td>${esc(a.due_at)}</td><td>${esc(statusLabel(s?.status||'ยังไม่ส่ง'))}</td><td>${esc(s?.grade??'-')}</td></tr>`;})));
+ }else{
+  const progress=await getRows('lesson_progress','lesson_id,status,completed_at,updated_at',[['user_id',currentProfile.id]]);
+  root.innerHTML=panel('ความก้าวหน้าของฉัน',table(['บทเรียน','สถานะ','วันที่สำเร็จ'],progress.map(p=>`<tr><td>${esc(lessons.find(l=>l.id===p.lesson_id)?.title||p.lesson_id)}</td><td>${esc(statusLabel(p.status))}</td><td>${esc(p.completed_at)}</td></tr>`)));
+ }
 }
 
-const message = document.getElementById('hub-login-message');
-const form = document.getElementById('hub-login-form');
-
-loginBtn.addEventListener('click', () => {
-  overlay.style.display = 'flex';
+async function openDashboard(profile){
+ currentProfile=profile;
+ closeLogin();
+ dashboard.style.display='block';
+ document.getElementById('hub-welcome').textContent=`สวัสดี ${profile.full_name||profile.email||''}`;
+ document.getElementById('hub-role').textContent=`บัญชีผู้ใช้: ${profile.role} • สถานะ: ${statusLabel(profile.status)}`;
+ loginBtn.textContent='ออกจากระบบ';
+ currentTab='';
+ await renderDashboard();
+ dashboard.scrollIntoView({behavior:'smooth',block:'start'});
+}
+async function doLogout(){
+ const {error}=await supabase.auth.signOut();
+ if(error){alert('ออกจากระบบไม่สำเร็จ: '+error.message);return;}
+ currentProfile=null;dashboard.style.display='none';loginBtn.textContent='เข้าสู่ระบบ';currentTab='';
+}
+form.addEventListener('submit',async e=>{
+ e.preventDefault();
+ 
+ const submit=document.getElementById('hub-login-submit');submit.disabled=true;submit.textContent='กำลังตรวจสอบ...';msg.textContent='';
+ try{
+  const email=document.getElementById('hub-email').value.trim();
+  const password=document.getElementById('hub-password').value;
+  const {data,error}=await supabase.auth.signInWithPassword({email,password});if(error)throw error;
+  const {data:profile,error:profileError}=await supabase.from('profiles').select('id,email,full_name,role,status').eq('id',data.user.id).single();
+  if(profileError||!profile){await supabase.auth.signOut();throw new Error('ไม่พบข้อมูลโปรไฟล์ กรุณาติดต่อผู้ดูแลระบบ');}
+  if(profile.status!=='approved'){await supabase.auth.signOut();throw new Error('บัญชีนี้ยังไม่ได้รับอนุมัติให้เข้าใช้งาน');}
+  if(!['admin','instructor','student'].includes(profile.role)){await supabase.auth.signOut();throw new Error('ไม่พบบทบาทผู้ใช้งานที่ถูกต้อง');}
+  await openDashboard(profile);
+ }catch(err){msg.textContent=err.message||'เข้าสู่ระบบไม่สำเร็จ';}
+ finally{submit.disabled=false;submit.textContent='เข้าสู่ระบบ';}
 });
-
-document.getElementById('hub-login-close').onclick = () => {
-  overlay.style.display = 'none';
-};
-
-overlay.addEventListener('click', e => {
-  if (e.target === overlay) overlay.style.display = 'none';
-});
-
-form.addEventListener('submit', async e => {
-  e.preventDefault();
-  const submit = document.getElementById('hub-login-submit');
-  submit.disabled = true;
-  submit.textContent = 'กำลังตรวจสอบ...';
-  message.textContent = '';
-
-  try {
-    const email = document.getElementById('hub-email').value.trim();
-    const password = document.getElementById('hub-password').value;
-
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email, password
-    });
-    if (error) throw error;
-
-    const user = data.user;
-    const { data: profile, error: profileError } = await supabase
-      .from('profiles')
-      .select('full_name, role, status')
-      .eq('id', user.id)
-      .single();
-
-    if (profileError || !profile) {
-      await supabase.auth.signOut();
-      throw new Error('ไม่พบข้อมูลโปรไฟล์ กรุณาติดต่อผู้ดูแลระบบ');
-    }
-
-    if (profile.status !== 'approved') {
-      await supabase.auth.signOut();
-      throw new Error('บัญชีนี้ยังไม่ได้รับอนุมัติให้เข้าใช้งาน');
-    }
-
-    if (!['admin', 'instructor', 'student'].includes(profile.role)) {
-      await supabase.auth.signOut();
-      throw new Error('ไม่พบบทบาทผู้ใช้งานที่ถูกต้อง');
-    }
-
-    message.textContent =
-      `เข้าสู่ระบบสำเร็จ: ${profile.full_name || email} (${profile.role})`;
-
-    loginBtn.textContent = 'ออกจากระบบ';
-    loginBtn.onclick = async () => {
-      await supabase.auth.signOut();
-      location.reload();
-    };
-
-  } catch (err) {
-    message.textContent = err.message || 'เข้าสู่ระบบไม่สำเร็จ';
-  } finally {
-    submit.disabled = false;
-    submit.textContent = 'เข้าสู่ระบบ';
-  }
-});
+const {data:{session}}=await supabase.auth.getSession();
+if(session){
+ const {data:profile}=await supabase.from('profiles').select('id,email,full_name,role,status').eq('id',session.user.id).maybeSingle();
+ if(profile&&profile.status==='approved'&&['admin','instructor','student'].includes(profile.role)) await openDashboard(profile);
+}
 </script>
 
 </body>
