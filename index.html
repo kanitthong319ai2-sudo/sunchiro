@@ -182,7 +182,7 @@ function copyPrompt(){
 }
 </script>
  
-<!-- Supabase Authentication + Role Dashboards -->
+<!-- Supabase Authentication + Complete Learning Hub Dashboards v1.2 -->
 <script type="module">
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
@@ -192,30 +192,24 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const css = document.createElement('style');
 css.textContent = `
-#hub-login-btn{background:#174b83;color:#fff;border:0;border-radius:8px;padding:10px 18px;font-weight:600;cursor:pointer}
+#hub-login-btn{background:#174b83;color:#fff;border:0;border-radius:8px;padding:10px 18px;font-weight:700;cursor:pointer}
 #hub-login-overlay{display:none;position:fixed;inset:0;background:#0009;z-index:99999;align-items:center;justify-content:center;padding:20px}
-#hub-login-box{background:#fff;color:#172033;width:100%;max-width:390px;padding:28px;border-radius:16px;box-shadow:0 15px 50px #0004;font-family:inherit}
+#hub-login-box{background:#fff;color:#172033;width:100%;max-width:410px;padding:28px;border-radius:16px;box-shadow:0 15px 50px #0004;font-family:inherit}
 #hub-login-box input{width:100%;box-sizing:border-box;padding:12px;margin:7px 0 15px;border:1px solid #ccd3df;border-radius:8px;font-size:15px}
 #hub-login-box button{padding:11px 16px;border:0;border-radius:8px;cursor:pointer}
 #hub-login-submit{background:#174b83;color:white;width:100%}#hub-login-close{background:#eee;color:#333;width:100%;margin-top:10px}
-#hub-login-message{font-size:14px;margin-top:12px;line-height:1.5}
-#hub-dashboard{display:none;max-width:1150px;margin:35px auto;padding:0 22px 50px}
+#hub-login-message{font-size:14px;margin-top:12px;line-height:1.5;color:#b42318}
+#hub-dashboard{display:none;max-width:1190px;margin:35px auto;padding:0 22px 50px}
 .hub-head{background:linear-gradient(120deg,#10233f,#174b83);color:white;border-radius:18px;padding:25px;margin-bottom:20px}
 .hub-head h2{color:white;margin:0}.hub-head p{margin:5px 0 0;color:#dbeafe}
-.hub-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}
-.hub-tabs button,.hub-action{border:0;border-radius:9px;padding:9px 14px;background:#e8f1ff;color:#174b83;font-weight:600;cursor:pointer}
-.hub-tabs button.active,.hub-action.primary{background:#174b83;color:white}
-.hub-panel{background:#fff;border:1px solid #e6ebf3;border-radius:15px;padding:20px;margin:12px 0;overflow:auto}
-.hub-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
-.hub-stat{background:#f3f7fd;border-radius:12px;padding:15px}.hub-stat b{font-size:25px;color:#174b83;display:block}
-.hub-table{width:100%;border-collapse:collapse;font-size:13px}.hub-table th,.hub-table td{padding:10px;border-bottom:1px solid #e8edf4;text-align:left;vertical-align:top}
-.hub-table th{background:#f4f7fc;color:#30435e;white-space:nowrap}
-.hub-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin:12px 0}
-.hub-form input,.hub-form textarea,.hub-form select{width:100%;padding:10px;border:1px solid #ccd5e2;border-radius:8px;font:inherit}
-.hub-form textarea{min-height:75px}.hub-muted{color:#64748b;font-size:13px}
-.hub-badge{display:inline-block;padding:3px 8px;border-radius:20px;background:#edf4ff;color:#2455a0;font-size:12px}
-.hub-danger{background:#fff0f0!important;color:#a11!important}
-@media(max-width:600px){.hub-panel{padding:13px}.hub-table{min-width:600px}}
+.hub-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}.hub-tabs button,.hub-action{border:0;border-radius:9px;padding:9px 14px;background:#e8f1ff;color:#174b83;font-weight:700;cursor:pointer}
+.hub-tabs button.active,.hub-action.primary{background:#174b83;color:white}.hub-action.danger{background:#fff0f0;color:#a11}.hub-action.small{padding:5px 9px;font-size:12px}
+.hub-panel{background:#fff;border:1px solid #e6ebf3;border-radius:15px;padding:20px;margin:12px 0;overflow:auto}.hub-panel h3{margin:0 0 12px;color:#10233f;font-family:Kanit,sans-serif}
+.hub-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:12px}.hub-stat{background:#f3f7fd;border-radius:12px;padding:15px}.hub-stat b{font-size:25px;color:#174b83;display:block}
+.hub-table{width:100%;border-collapse:collapse;font-size:13px}.hub-table th,.hub-table td{padding:10px;border-bottom:1px solid #e8edf4;text-align:left;vertical-align:top}.hub-table th{background:#f4f7fc;color:#30435e;white-space:nowrap}
+.hub-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin:12px 0}.hub-form input,.hub-form textarea,.hub-form select,.hub-field{width:100%;padding:10px;border:1px solid #ccd5e2;border-radius:8px;font:inherit;background:#fff;color:#17243a}.hub-form textarea{min-height:90px;grid-column:1/-1}.hub-form .wide{grid-column:1/-1}.hub-form label{font-size:13px;font-weight:600}.hub-form .check{display:flex;align-items:center;gap:8px}.hub-form .check input{width:auto}
+.hub-muted{color:#64748b;font-size:13px}.hub-badge{display:inline-block;padding:3px 8px;border-radius:20px;background:#edf4ff;color:#2455a0;font-size:12px}.hub-row-actions{display:flex;gap:5px;flex-wrap:wrap}.hub-note{background:#fff8e7;border:1px solid #f4dfaa;border-radius:10px;padding:12px;color:#73510b;font-size:13px;margin:10px 0}.hub-success{background:#ecfdf3;border:1px solid #abefc6;color:#067647;border-radius:10px;padding:10px}.hub-error{background:#fff1f0;border:1px solid #fecdca;color:#b42318;border-radius:10px;padding:10px}.hub-card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}.hub-course-card{border:1px solid #e6ebf3;border-radius:12px;padding:15px;background:#fff}.hub-course-card h4{margin:0 0 6px;color:#174b83}.hub-course-card p{font-size:13px;color:#64748b}.hub-content-text{white-space:pre-wrap;line-height:1.8}.hub-question{border:1px solid #e6ebf3;border-radius:10px;padding:14px;margin:10px 0}.hub-question label{display:block;margin:5px 0;font-weight:400}.hub-inline{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+@media(max-width:600px){.hub-panel{padding:13px}.hub-table{min-width:650px}#hub-dashboard{padding:0 12px 35px}.hub-head{padding:18px}}
 `;
 document.head.appendChild(css);
 
@@ -230,173 +224,97 @@ document.body.appendChild(overlay);
 
 const nav = document.querySelector('.navlinks') || document.querySelector('.navin');
 const loginBtn = document.createElement('button');
-loginBtn.id = 'hub-login-btn';
-loginBtn.textContent = 'เข้าสู่ระบบ';
-if (nav) nav.appendChild(loginBtn);
-else { loginBtn.style.cssText='position:fixed;right:20px;bottom:20px;z-index:9999'; document.body.appendChild(loginBtn); }
-
+loginBtn.id = 'hub-login-btn'; loginBtn.textContent = 'เข้าสู่ระบบ';
+if (nav) nav.appendChild(loginBtn); else { loginBtn.style.cssText='position:fixed;right:20px;bottom:20px;z-index:9999'; document.body.appendChild(loginBtn); }
 const dashboard = document.createElement('main');
 dashboard.id = 'hub-dashboard';
-dashboard.innerHTML = `<div class="hub-head"><h2 id="hub-welcome">Learning Dashboard</h2><p id="hub-role"></p></div>
-<div class="hub-tabs" id="hub-tabs"></div><div id="hub-content"></div>`;
-const footer = document.querySelector('footer');
-if (footer) footer.before(dashboard); else document.body.appendChild(dashboard);
+dashboard.innerHTML = `<div class="hub-head"><h2 id="hub-welcome">Learning Dashboard</h2><p id="hub-role"></p></div><div class="hub-tabs" id="hub-tabs"></div><div id="hub-content"></div>`;
+const footer = document.querySelector('footer'); if (footer) footer.before(dashboard); else document.body.appendChild(dashboard);
 
 const msg = document.getElementById('hub-login-message');
 const form = document.getElementById('hub-login-form');
-let currentProfile = null;
-let currentTab = '';
+let currentProfile = null, currentTab = 'overview', cache = {};
+const $ = (id) => id.includes('[') ? document.querySelector(id) : document.getElementById(id);
+const esc = (v) => String(v ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const labelStatus = (v) => ({approved:'อนุมัติแล้ว',pending:'รออนุมัติ',rejected:'ไม่อนุมัติ',active:'ใช้งาน',completed:'สำเร็จ',submitted:'ส่งแล้ว',graded:'ตรวจแล้ว',draft:'ฉบับร่าง'})[v] || v || '-';
+const dateText = (v) => v ? new Date(v).toLocaleString('th-TH') : '-';
+const slugify = (v) => String(v||'').trim().toLowerCase().replace(/[^a-z0-9ก-๙]+/g,'-').replace(/^-|-$/g,'') || 'course';
+const panel = (title,body,extra='') => `<section class="hub-panel"><h3>${title}</h3>${extra}${body}</section>`;
+const stat = (title,n) => `<div class="hub-stat"><span class="hub-muted">${title}</span><b>${n}</b></div>`;
+const table = (heads,rows) => `<div style="overflow:auto"><table class="hub-table"><thead><tr>${heads.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${rows.length?rows.join(''):`<tr><td colspan="${heads.length}" class="hub-muted">ยังไม่มีข้อมูล</td></tr>`}</tbody></table></div>`;
+const btn = (action,id,text,kind='') => `<button type="button" class="hub-action small ${kind}" data-action="${action}" data-id="${esc(id)}">${text}</button>`;
+const notice = (text) => `<div class="hub-note">${text}</div>`;
+async function rows(tableName,select='*',filters=[],order=null){let q=supabase.from(tableName).select(select);for(const [k,v] of filters)q=q.eq(k,v);if(order)q=q.order(order,{ascending:true});const {data,error}=await q;if(error)throw error;return data||[];}
+async function mutate(query,success){const {error}=await query;if(error)throw error;return success;}
+async function logAction(action,targetType=null,targetId=null,details={}){if(currentProfile?.role!=='admin')return;try{await supabase.from('audit_logs').insert({actor_id:currentProfile.id,action,target_type:targetType,target_id:targetId,details});}catch(e){console.warn('audit log:',e.message);}}
+function showLogin(){overlay.style.display='flex';} function closeLogin(){overlay.style.display='none';}
+loginBtn.addEventListener('click',async()=>{if(currentProfile)await logout();else showLogin();});
+$('hub-login-close').addEventListener('click',closeLogin); overlay.addEventListener('click',e=>{if(e.target===overlay)closeLogin();});
+function setTabs(items){$('hub-tabs').innerHTML=items.map(([id,name])=>`<button data-tab="${id}" class="${currentTab===id?'active':''}">${name}</button>`).join('');$('hub-tabs').querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>{currentTab=b.dataset.tab;render();}));}
+async function render(){const root=$('hub-content');root.innerHTML=panel('กำลังโหลด','กำลังดึงข้อมูลจาก Supabase...');try{if(!currentProfile)return;if(currentProfile.role==='admin')await renderAdmin(root);else if(currentProfile.role==='instructor')await renderInstructor(root);else await renderStudent(root);}catch(e){root.innerHTML=panel('ไม่สามารถโหลดข้อมูลได้',`<div class="hub-error">${esc(e.message||e)}</div>${notice('ระบบจะเข้าถึงเฉพาะข้อมูลที่ได้รับอนุญาตตาม RLS ของ Supabase โปรดตรวจสอบสิทธิ์ของตารางที่เกี่ยวข้อง')}`);}}
+async function loadCore(){const [courses,lessons,assignments,quizzes,profiles]=await Promise.all([rows('courses','id,title,slug,description,published,created_by,created_at,updated_at'),rows('lessons','id,course_id,title,content,position,is_published,created_at,updated_at'),rows('assignments','id,lesson_id,title,description,due_at,created_at'),rows('quizzes','id,lesson_id,title,pass_score,is_published,created_at'),currentProfile.role==='admin'?rows('profiles','id,email,full_name,role,status,created_at'):Promise.resolve([])]);cache={courses,lessons,assignments,quizzes,profiles};return cache;}
+function courseForm(c=null){return `<form id="course-form" class="hub-form"><input type="hidden" name="id" value="${esc(c?.id||'')}"><input name="title" required placeholder="ชื่อหลักสูตร" value="${esc(c?.title||'')}"><input name="slug" placeholder="Slug เช่น generative-ai" value="${esc(c?.slug||'')}"><textarea name="description" placeholder="รายละเอียดและผลลัพธ์การเรียนรู้">${esc(c?.description||'')}</textarea><button class="hub-action primary" type="submit">${c?'บันทึกการแก้ไข':'สร้างหลักสูตร'}</button>${c?`<button class="hub-action" type="button" data-action="cancel-edit">ยกเลิก</button>`:''}</form>`;}
+function lessonForm(courses,lesson=null){return `<form id="lesson-form" class="hub-form"><input type="hidden" name="id" value="${esc(lesson?.id||'')}"><select name="course_id" required><option value="">เลือกหลักสูตร</option>${courses.map(c=>`<option value="${esc(c.id)}" ${lesson?.course_id===c.id?'selected':''}>${esc(c.title)}</option>`).join('')}</select><input name="title" required placeholder="ชื่อบทเรียน" value="${esc(lesson?.title||'')}"><input name="position" type="number" min="1" value="${esc(lesson?.position||1)}"><textarea name="content" placeholder="เนื้อหาบทเรียน / URL วิดีโอ / ลิงก์เอกสาร">${esc(lesson?.content||'')}</textarea><button class="hub-action primary" type="submit">${lesson?'บันทึกบทเรียน':'เพิ่มบทเรียน'}</button>${lesson?`<button class="hub-action" type="button" data-action="cancel-edit">ยกเลิก</button>`:''}</form>`;}
+function assignmentForm(lessons){return `<form id="assignment-form" class="hub-form"><select name="lesson_id" required><option value="">เลือกบทเรียน</option>${lessons.map(l=>`<option value="${esc(l.id)}">${esc(l.title)}</option>`).join('')}</select><input name="title" required placeholder="ชื่องานที่มอบหมาย"><input name="due_at" type="datetime-local"><textarea name="description" placeholder="คำชี้แจง / เกณฑ์การส่งงาน"></textarea><button class="hub-action primary" type="submit">สร้างงานมอบหมาย</button></form>`;}
+function quizForm(lessons){return `<form id="quiz-form" class="hub-form"><select name="lesson_id" required><option value="">เลือกบทเรียน</option>${lessons.map(l=>`<option value="${esc(l.id)}">${esc(l.title)}</option>`).join('')}</select><input name="title" required placeholder="ชื่อแบบทดสอบ"><input name="pass_score" type="number" min="0" max="100" value="60" placeholder="คะแนนผ่าน (%)"><button class="hub-action primary" type="submit">สร้างแบบทดสอบ</button></form>`;}
+async function renderAdmin(root){const items=[['overview','ภาพรวม'],['users','สมาชิก'],['courses','หลักสูตร'],['content','บทเรียนและกิจกรรม'],['enrollments','ลงทะเบียน'],['submissions','ตรวจงาน'],['quizzes','แบบทดสอบ'],['audit','ประวัติระบบ']];if(!items.some(x=>x[0]===currentTab))currentTab='overview';setTabs(items);
+ if(currentTab==='overview'){const [p,c,l,e,s,q]=await Promise.all([rows('profiles','id'),rows('courses','id'),rows('lessons','id'),rows('enrollments','id'),rows('submissions','id'),rows('quizzes','id')]);root.innerHTML=panel('ภาพรวมระบบ',`<div class="hub-grid">${stat('สมาชิก',p.length)}${stat('หลักสูตร',c.length)}${stat('บทเรียน',l.length)}${stat('การลงทะเบียน',e.length)}${stat('การส่งงาน',s.length)}${stat('แบบทดสอบ',q.length)}</div>`)+panel('สถานะระบบ',notice('ระบบ Login และ Dashboard เชื่อมต่อ Supabase แล้ว ข้อมูลแต่ละส่วนจะแสดงตามสิทธิ์ RLS ที่กำหนด'));
+ }else if(currentTab==='users'){const users=await rows('profiles','id,email,full_name,role,status,created_at');root.innerHTML=panel('จัดการสมาชิก',table(['ชื่อ','อีเมล','บทบาท','สถานะ','ปรับสิทธิ์'],users.map(u=>`<tr><td>${esc(u.full_name||'-')}</td><td>${esc(u.email)}</td><td><select class="hub-field" data-role-user="${esc(u.id)}"><option value="student" ${u.role==='student'?'selected':''}>Student</option><option value="instructor" ${u.role==='instructor'?'selected':''}>Instructor</option><option value="admin" ${u.role==='admin'?'selected':''}>Admin</option></select></td><td><select class="hub-field" data-status-user="${esc(u.id)}"><option value="pending" ${u.status==='pending'?'selected':''}>รออนุมัติ</option><option value="approved" ${u.status==='approved'?'selected':''}>อนุมัติ</option><option value="rejected" ${u.status==='rejected'?'selected':''}>ไม่อนุมัติ</option></select></td><td>${btn('save-user',u.id,'บันทึก','primary')}</td></tr>`)));
+ }else if(currentTab==='courses'){await loadCore();root.innerHTML=panel('สร้าง / แก้ไขหลักสูตร',courseForm())+panel('หลักสูตรทั้งหมด',table(['หลักสูตร','สถานะ','ผู้สร้าง','จัดการ'],cache.courses.map(c=>`<tr><td><b>${esc(c.title)}</b><br><span class="hub-muted">${esc(c.slug)}</span><br>${esc(c.description||'')}</td><td>${c.published?'เผยแพร่':'ฉบับร่าง'}</td><td>${esc(cache.profiles.find(p=>p.id===c.created_by)?.full_name||c.created_by||'-')}</td><td><div class="hub-row-actions">${btn('edit-course',c.id,'แก้ไข')}${btn('toggle-course',c.id,c.published?'ปิดเผยแพร่':'เผยแพร่','primary')}${btn('delete-course',c.id,'ลบ','danger')}</div></td></tr>`)));
+ }else if(currentTab==='content'){await loadCore();const lessons=cache.lessons;root.innerHTML=panel('จัดการบทเรียน',lessonForm(cache.courses))+panel('บทเรียนทั้งหมด',table(['บทเรียน','หลักสูตร','ลำดับ','สถานะ','จัดการ'],lessons.map(l=>`<tr><td>${esc(l.title)}<br><span class="hub-muted">${esc(l.content||'')}</span></td><td>${esc(cache.courses.find(c=>c.id===l.course_id)?.title)}</td><td>${l.position}</td><td>${l.is_published?'เผยแพร่':'ฉบับร่าง'}</td><td><div class="hub-row-actions">${btn('edit-lesson',l.id,'แก้ไข')}${btn('toggle-lesson',l.id,l.is_published?'ปิด':'เผยแพร่','primary')}${btn('delete-lesson',l.id,'ลบ','danger')}</div></td></tr>`)))+panel('สร้างงานมอบหมาย',assignmentForm(lessons))+panel('งานมอบหมายทั้งหมด',table(['งาน','บทเรียน','กำหนดส่ง'],cache.assignments.map(a=>`<tr><td>${esc(a.title)}<br>${esc(a.description||'')}</td><td>${esc(lessons.find(l=>l.id===a.lesson_id)?.title)}</td><td>${dateText(a.due_at)}</td></tr>`)));
+ }else if(currentTab==='enrollments'){await loadCore();const [enroll,students]=await Promise.all([rows('enrollments','id,user_id,course_id,status,enrolled_at'),rows('profiles','id,email,full_name,role,status')]);const eligible=students.filter(p=>p.role==='student'&&p.status==='approved');root.innerHTML=panel('ลงทะเบียนผู้เรียนในหลักสูตร',`<form id="enroll-form" class="hub-form"><select name="user_id" required><option value="">เลือกผู้เรียน</option>${eligible.map(p=>`<option value="${esc(p.id)}">${esc(p.full_name||p.email)} (${esc(p.email)})</option>`).join('')}</select><select name="course_id" required><option value="">เลือกหลักสูตร</option>${cache.courses.map(c=>`<option value="${esc(c.id)}">${esc(c.title)}</option>`).join('')}</select><select name="status"><option value="active">active</option><option value="completed">completed</option><option value="cancelled">cancelled</option></select><button class="hub-action primary">ลงทะเบียน</button></form>`)+panel('รายการลงทะเบียน',table(['ผู้เรียน','หลักสูตร','สถานะ','วันที่','จัดการ'],enroll.map(e=>`<tr><td>${esc(students.find(p=>p.id===e.user_id)?.full_name||students.find(p=>p.id===e.user_id)?.email||e.user_id)}</td><td>${esc(cache.courses.find(c=>c.id===e.course_id)?.title||e.course_id)}</td><td>${esc(e.status)}</td><td>${dateText(e.enrolled_at)}</td><td>${btn('remove-enroll',e.id,'ยกเลิก','danger')}</td></tr>`)));
+ }else if(currentTab==='submissions'){const [subs,assign,lessons]=await Promise.all([rows('submissions','id,assignment_id,student_id,content,file_url,status,grade,feedback,submitted_at'),rows('assignments','id,lesson_id,title'),rows('lessons','id,course_id,title')]);const users=await rows('profiles','id,full_name,email');root.innerHTML=panel('ตรวจและให้คะแนนงาน',table(['ผู้เรียน','งาน','คำตอบ / ไฟล์','ส่งเมื่อ','คะแนนและข้อเสนอแนะ'],subs.map(s=>`<tr><td>${esc(users.find(u=>u.id===s.student_id)?.full_name||users.find(u=>u.id===s.student_id)?.email||s.student_id)}</td><td>${esc(assign.find(a=>a.id===s.assignment_id)?.title||s.assignment_id)}</td><td>${esc(s.content||'-')} ${s.file_url?`<br><a href="${esc(s.file_url)}" target="_blank" rel="noopener">เปิดไฟล์แนบ</a>`:''}</td><td>${dateText(s.submitted_at)}</td><td><form data-grade-form="${esc(s.id)}" class="hub-form"><input name="grade" type="number" min="0" step="0.5" placeholder="คะแนน" value="${esc(s.grade??'')}"><input name="feedback" placeholder="ข้อเสนอแนะ" value="${esc(s.feedback||'')}"><button class="hub-action primary">บันทึกผล</button></form></td></tr>`)));
+ }else if(currentTab==='quizzes'){await loadCore();const qs=await rows('quiz_questions','id,quiz_id,question,question_type,options,points,position');const attempts=await rows('quiz_attempts','id,quiz_id,student_id,score,status,started_at,submitted_at');root.innerHTML=panel('สร้างแบบทดสอบ',quizForm(cache.lessons))+panel('แบบทดสอบและข้อคำถาม',table(['แบบทดสอบ','บทเรียน','คะแนนผ่าน','สถานะ','ข้อคำถาม'],cache.quizzes.map(q=>`<tr><td><b>${esc(q.title)}</b></td><td>${esc(cache.lessons.find(l=>l.id===q.lesson_id)?.title)}</td><td>${q.pass_score}</td><td>${q.is_published?'เผยแพร่':'ฉบับร่าง'}</td><td>${qs.filter(x=>x.quiz_id===q.id).length} ข้อ<br>${btn('add-question',q.id,'เพิ่มข้อคำถาม')}${btn('toggle-quiz',q.id,q.is_published?'ปิด':'เผยแพร่','primary')}</td></tr>`)))+panel('ผลการทำแบบทดสอบ',table(['ผู้เรียน','แบบทดสอบ','สถานะ','คะแนน','วันที่ส่ง'],attempts.map(a=>`<tr><td>${esc(usersafe(a.student_id))}</td><td>${esc(cache.quizzes.find(q=>q.id===a.quiz_id)?.title||a.quiz_id)}</td><td>${esc(a.status)}</td><td>${esc(a.score??'รอตรวจ')}</td><td>${dateText(a.submitted_at)}</td></tr>`)),notice('ระบบจัดเก็บคำตอบแบบทดสอบได้ แต่ยังไม่คำนวณคะแนนอัตโนมัติ เพราะเฉลยอยู่ในตาราง quiz_answer_keys ซึ่งต้องรักษาสิทธิ์ไม่ให้ผู้เรียนอ่านได้'));
+ }else{const logs=await rows('audit_logs','id,actor_id,action,target_type,target_id,details,created_at');root.innerHTML=panel('ประวัติการดำเนินการ',table(['ผู้ดำเนินการ','รายการ','ประเภท','รายละเอียด','เวลา'],logs.map(x=>`<tr><td>${esc(x.actor_id)}</td><td>${esc(x.action)}</td><td>${esc(x.target_type)}</td><td>${esc(JSON.stringify(x.details||{}))}</td><td>${dateText(x.created_at)}</td></tr>`)));}
+}
+function usersafe(id){return cache.profiles?.find(p=>p.id===id)?.full_name||id;}
+async function renderInstructor(root){const [courses,lessons,assignments,quizzes]=await Promise.all([rows('courses','id,title,slug,description,published,created_by,created_at,updated_at',[['created_by',currentProfile.id]]),rows('lessons','id,course_id,title,content,position,is_published'),rows('assignments','id,lesson_id,title,description,due_at'),rows('quizzes','id,lesson_id,title,pass_score,is_published')]);const ids=courses.map(c=>c.id),myLessons=lessons.filter(l=>ids.includes(l.course_id)),myLessonIds=myLessons.map(l=>l.id),myAssignments=assignments.filter(a=>myLessonIds.includes(a.lesson_id)),myQuizzes=quizzes.filter(q=>myLessonIds.includes(q.lesson_id));cache={courses,lessons,assignments,quizzes};const items=[['overview','ภาพรวม'],['courses','หลักสูตรของฉัน'],['content','บทเรียนและงาน'],['submissions','ตรวจงาน'],['quizzes','แบบทดสอบ']];if(!items.some(x=>x[0]===currentTab))currentTab='overview';setTabs(items);
+ if(currentTab==='overview'){const subs=await rows('submissions','id,assignment_id');const mySubs=subs.filter(s=>myAssignments.some(a=>a.id===s.assignment_id));root.innerHTML=panel('ภาพรวมผู้สอน',`<div class="hub-grid">${stat('หลักสูตรของฉัน',courses.length)}${stat('บทเรียน',myLessons.length)}${stat('งานมอบหมาย',myAssignments.length)}${stat('งานที่ส่ง',mySubs.length)}${stat('แบบทดสอบ',myQuizzes.length)}</div>`);}
+ else if(currentTab==='courses'){root.innerHTML=panel('สร้างหลักสูตร',courseForm())+panel('หลักสูตรของฉัน',table(['หลักสูตร','Slug','สถานะ','จัดการ'],courses.map(c=>`<tr><td><b>${esc(c.title)}</b><br>${esc(c.description||'')}</td><td>${esc(c.slug)}</td><td>${c.published?'เผยแพร่':'ฉบับร่าง'}</td><td><div class="hub-row-actions">${btn('edit-course',c.id,'แก้ไข')}${btn('toggle-course',c.id,c.published?'ปิดเผยแพร่':'เผยแพร่','primary')}</div></td></tr>`)));}
+ else if(currentTab==='content'){root.innerHTML=panel('เพิ่ม / แก้ไขบทเรียน',lessonForm(courses))+panel('บทเรียนของฉัน',table(['บทเรียน','หลักสูตร','ลำดับ','สถานะ','จัดการ'],myLessons.map(l=>`<tr><td>${esc(l.title)}<br><span class="hub-muted">${esc(l.content||'')}</span></td><td>${esc(courses.find(c=>c.id===l.course_id)?.title)}</td><td>${l.position}</td><td>${l.is_published?'เผยแพร่':'ฉบับร่าง'}</td><td><div class="hub-row-actions">${btn('edit-lesson',l.id,'แก้ไข')}${btn('toggle-lesson',l.id,l.is_published?'ปิด':'เผยแพร่','primary')}</div></td></tr>`)))+panel('มอบหมายงาน',assignmentForm(myLessons))+panel('งานทั้งหมด',table(['งาน','บทเรียน','กำหนดส่ง'],myAssignments.map(a=>`<tr><td>${esc(a.title)}<br>${esc(a.description||'')}</td><td>${esc(myLessons.find(l=>l.id===a.lesson_id)?.title)}</td><td>${dateText(a.due_at)}</td></tr>`)));}
+ else if(currentTab==='submissions'){const subs=await rows('submissions','id,assignment_id,student_id,content,file_url,status,grade,feedback,submitted_at');const mine=subs.filter(s=>myAssignments.some(a=>a.id===s.assignment_id));const students=await rows('profiles','id,full_name,email');root.innerHTML=panel('ตรวจงานของผู้เรียน',table(['ผู้เรียน','งาน','ผลงาน','วันที่ส่ง','ผลประเมิน'],mine.map(s=>`<tr><td>${esc(students.find(u=>u.id===s.student_id)?.full_name||students.find(u=>u.id===s.student_id)?.email||s.student_id)}</td><td>${esc(myAssignments.find(a=>a.id===s.assignment_id)?.title)}</td><td>${esc(s.content||'-')} ${s.file_url?`<br><a href="${esc(s.file_url)}" target="_blank" rel="noopener">เปิดไฟล์</a>`:''}</td><td>${dateText(s.submitted_at)}</td><td><form data-grade-form="${esc(s.id)}" class="hub-form"><input name="grade" type="number" min="0" step="0.5" placeholder="คะแนน" value="${esc(s.grade??'')}"><input name="feedback" placeholder="ข้อเสนอแนะ" value="${esc(s.feedback||'')}"><button class="hub-action primary">บันทึก</button></form></td></tr>`)));}
+ else{const questions=await rows('quiz_questions','id,quiz_id,question,question_type,options,points,position');root.innerHTML=panel('สร้างแบบทดสอบ',quizForm(myLessons))+panel('แบบทดสอบของฉัน',table(['แบบทดสอบ','บทเรียน','คะแนนผ่าน','สถานะ','จัดการ'],myQuizzes.map(q=>`<tr><td>${esc(q.title)}</td><td>${esc(myLessons.find(l=>l.id===q.lesson_id)?.title)}</td><td>${q.pass_score}</td><td>${q.is_published?'เผยแพร่':'ฉบับร่าง'}</td><td>${btn('add-question',q.id,'เพิ่มข้อคำถาม')}${btn('toggle-quiz',q.id,q.is_published?'ปิด':'เผยแพร่','primary')}<br>${questions.filter(x=>x.quiz_id===q.id).length} ข้อ</td></tr>`)),notice('เพิ่มข้อคำถามได้ทั้งแบบปรนัยและคำตอบสั้น ระบบจะเก็บคำตอบผู้เรียนเป็น attempt โดยไม่เปิดเผยเฉลย'));
+ }}
+async function renderStudent(root){const [enroll,courses,lessons,assignments,quizzes,progress,subs]=await Promise.all([rows('enrollments','id,user_id,course_id,status,enrolled_at',[['user_id',currentProfile.id]]),rows('courses','id,title,slug,description,published'),rows('lessons','id,course_id,title,content,position,is_published'),rows('assignments','id,lesson_id,title,description,due_at'),rows('quizzes','id,lesson_id,title,pass_score,is_published'),rows('lesson_progress','id,lesson_id,status,completed_at,updated_at',[['user_id',currentProfile.id]]),rows('submissions','id,assignment_id,student_id,content,file_url,status,grade,feedback,submitted_at',[['student_id',currentProfile.id]])]);const active=enroll.filter(e=>e.status==='active').map(e=>e.course_id);const myCourses=courses.filter(c=>active.includes(c.id)&&c.published);const myLessons=lessons.filter(l=>active.includes(l.course_id)&&l.is_published);const lessonIds=myLessons.map(l=>l.id);const myAssignments=assignments.filter(a=>lessonIds.includes(a.lesson_id));const myQuizzes=quizzes.filter(q=>lessonIds.includes(q.lesson_id)&&q.is_published);cache={courses,lessons,assignments,quizzes};const items=[['overview','ภาพรวม'],['catalog','ค้นหาหลักสูตร'],['courses','หลักสูตรของฉัน'],['assignments','งานที่ได้รับ'],['quizzes','แบบทดสอบ'],['progress','ความก้าวหน้า']];if(!items.some(x=>x[0]===currentTab))currentTab='overview';setTabs(items);
+ if(currentTab==='overview'){root.innerHTML=panel('ภาพรวมการเรียน',`<div class="hub-grid">${stat('หลักสูตรที่ลงทะเบียน',myCourses.length)}${stat('บทเรียนที่เปิดเรียน',myLessons.length)}${stat('งานที่ได้รับ',myAssignments.length)}${stat('งานที่ส่งแล้ว',subs.length)}${stat('บทเรียนที่บันทึกความก้าวหน้า',progress.length)}</div>`);}
+ else if(currentTab==='catalog'){const available=courses.filter(c=>c.published&&!active.includes(c.id));root.innerHTML=panel('หลักสูตรที่เปิดรับผู้เรียน',notice('หากต้องการสมัครเรียนหลักสูตร กรุณาติดต่อผู้ดูแลระบบหรือผู้สอนเพื่อให้ลงทะเบียนบัญชีของคุณ เนื่องจากนโยบายฐานข้อมูลปัจจุบันอนุญาตให้ผู้จัดการหลักสูตรเป็นผู้เพิ่มการลงทะเบียนเท่านั้น')+`<div class="hub-card-grid">${available.map(c=>`<article class="hub-course-card"><h4>${esc(c.title)}</h4><p>${esc(c.description||'')}</p><span class="hub-badge">เปิดรับสมัคร</span></article>`).join('')||'<p class="hub-muted">ไม่มีหลักสูตรที่เปิดรับเพิ่มเติม</p>'}</div>`);}
+ else if(currentTab==='courses'){root.innerHTML=panel('หลักสูตรของฉัน',`<div class="hub-card-grid">${myCourses.map(c=>`<article class="hub-course-card"><h4>${esc(c.title)}</h4><p>${esc(c.description||'')}</p><b>${myLessons.filter(l=>l.course_id===c.id).length} บทเรียน</b></article>`).join('')||'<p class="hub-muted">ยังไม่มีหลักสูตรที่ลงทะเบียน</p>'}</div>`)+panel('บทเรียนทั้งหมด',myLessons.map(l=>`<details class="hub-question"><summary><b>${esc(l.position)}. ${esc(l.title)}</b></summary><div class="hub-content-text">${esc(l.content||'ยังไม่มีเนื้อหา')}</div><button class="hub-action primary" data-action="complete-lesson" data-id="${esc(l.id)}">ทำเครื่องหมายว่าเรียนจบ</button></details>`).join('')||'<p class="hub-muted">ยังไม่มีบทเรียน</p>');}
+ else if(currentTab==='assignments'){root.innerHTML=panel('งานที่ได้รับ',myAssignments.map(a=>{const sent=subs.find(s=>s.assignment_id===a.id);return `<article class="hub-question"><h4>${esc(a.title)}</h4><p>${esc(a.description||'')}</p><p class="hub-muted">กำหนดส่ง: ${dateText(a.due_at)} • สถานะ: ${esc(labelStatus(sent?.status||'ยังไม่ส่ง'))} • คะแนน: ${esc(sent?.grade??'-')}</p>${sent?.feedback?`<p>ข้อเสนอแนะ: ${esc(sent.feedback)}</p>`:''}<form class="hub-form" data-submit-work="${esc(a.id)}"><textarea name="content" placeholder="พิมพ์คำตอบ / คำอธิบายผลงาน" required></textarea><input name="file_url" type="url" placeholder="ลิงก์ไฟล์งาน (Google Drive / YouTube / URL)"><button class="hub-action primary">ส่งงาน${sent?'อีกครั้ง':''}</button></form></article>`;}).join('')||'<p class="hub-muted">ยังไม่มีงานที่ได้รับ</p>');}
+ else if(currentTab==='quizzes'){const questions=await rows('quiz_questions','id,quiz_id,question,question_type,options,points,position');const attempts=await rows('quiz_attempts','id,quiz_id,student_id,score,status,started_at,submitted_at',[['student_id',currentProfile.id]]);root.innerHTML=panel('แบบทดสอบ',myQuizzes.map(q=>{const qs=questions.filter(x=>x.quiz_id===q.id).sort((a,b)=>a.position-b.position);const done=attempts.filter(a=>a.quiz_id===q.id).length;return `<article class="hub-question"><h4>${esc(q.title)}</h4><p class="hub-muted">คะแนนผ่าน ${q.pass_score} • ทำแล้ว ${done} ครั้ง</p><form class="hub-form" data-take-quiz="${esc(q.id)}">${qs.map((x,i)=>{let opts=x.options||[];if(typeof opts==='string'){try{opts=JSON.parse(opts)}catch{opts=[]}}return `<div class="hub-question wide"><b>${i+1}. ${esc(x.question)} (${x.points} คะแนน)</b>${x.question_type==='multiple_choice'||x.question_type==='single_choice'?((Array.isArray(opts)?opts:[]).map((o,j)=>`<label><input type="radio" name="q_${esc(x.id)}" value="${esc(typeof o==='string'?o:o.value??o.label??j)}" required> ${esc(typeof o==='string'?o:o.label??o.value??'')}</label>`).join('')):`<textarea name="q_${esc(x.id)}" placeholder="พิมพ์คำตอบ" required></textarea>`}</div>`;}).join('')}<button class="hub-action primary" ${qs.length?'':'disabled'}>ส่งคำตอบ</button></form></article>`;}).join('')||'<p class="hub-muted">ยังไม่มีแบบทดสอบที่เปิดให้ทำ</p>');}
+ else{root.innerHTML=panel('ความก้าวหน้าของฉัน',table(['บทเรียน','สถานะ','วันที่สำเร็จ'],progress.map(p=>`<tr><td>${esc(myLessons.find(l=>l.id===p.lesson_id)?.title||p.lesson_id)}</td><td>${esc(labelStatus(p.status))}</td><td>${dateText(p.completed_at)}</td></tr>`)));}}
 
-function showLogin(){ overlay.style.display='flex'; }
-function closeLogin(){ overlay.style.display='none'; }
-loginBtn.addEventListener('click', async () => {
-  if (currentProfile) { await doLogout(); } else showLogin();
-});
-document.getElementById('hub-login-close').addEventListener('click', closeLogin);
-overlay.addEventListener('click', e => { if(e.target===overlay) closeLogin(); });
+async function saveCourse(formEl){const f=new FormData(formEl),id=f.get('id'),title=String(f.get('title')||'').trim();const payload={title,slug:slugify(f.get('slug')||title),description:String(f.get('description')||'').trim(),updated_at:new Date().toISOString()};if(!title)throw new Error('กรุณาระบุชื่อหลักสูตร');if(id){await mutate(supabase.from('courses').update(payload).eq('id',id),'');await logAction('update_course','course',id,{title});}else{payload.created_by=currentProfile.id;payload.published=false;const {data,error}=await supabase.from('courses').insert(payload).select('id').single();if(error)throw error;await logAction('create_course','course',data.id,{title});}alert('บันทึกหลักสูตรเรียบร้อย');render();}
+async function saveLesson(formEl){const f=new FormData(formEl),id=f.get('id'),payload={course_id:f.get('course_id'),title:String(f.get('title')||'').trim(),position:Number(f.get('position')||1),content:String(f.get('content')||''),updated_at:new Date().toISOString()};if(!payload.title)throw new Error('กรุณาระบุชื่อบทเรียน');if(id){await mutate(supabase.from('lessons').update(payload).eq('id',id),'');}else{payload.is_published=false;await mutate(supabase.from('lessons').insert(payload),'');}alert('บันทึกบทเรียนเรียบร้อย');render();}
+async function handleClick(action,id){if(action==='cancel-edit'){render();return;}if(action==='edit-course'){const c=(await rows('courses','id,title,slug,description,published,created_by,created_at,updated_at')).find(x=>x.id===id);if(!c)return;const root=$('hub-content');const holder=root.querySelector('#course-form')?.parentElement;if(holder)holder.innerHTML=courseForm(c);return;}if(action==='edit-lesson'){const l=(await rows('lessons','id,course_id,title,content,position,is_published')).find(x=>x.id===id);if(!l)return;const courses=await rows('courses','id,title,created_by');const holder=$('hub-content').querySelector('#lesson-form')?.parentElement;if(holder)holder.innerHTML=lessonForm(courses,l);return;}
+ if(action==='toggle-course'){const c=(await rows('courses','id,published')).find(x=>x.id===id);await mutate(supabase.from('courses').update({published:!c.published,updated_at:new Date().toISOString()}).eq('id',id),'');alert(c.published?'ปิดเผยแพร่หลักสูตรแล้ว':'เผยแพร่หลักสูตรแล้ว');render();}
+ if(action==='delete-course'){if(!confirm('ลบหลักสูตรนี้? ต้องลบบทเรียนและกิจกรรมที่เกี่ยวข้องก่อนหากฐานข้อมูลมีข้อจำกัด Foreign Key'))return;await mutate(supabase.from('courses').delete().eq('id',id),'');render();}
+ if(action==='toggle-lesson'){const l=(await rows('lessons','id,is_published')).find(x=>x.id===id);await mutate(supabase.from('lessons').update({is_published:!l.is_published,updated_at:new Date().toISOString()}).eq('id',id),'');render();}
+ if(action==='delete-lesson'){if(!confirm('ลบบทเรียนนี้?'))return;await mutate(supabase.from('lessons').delete().eq('id',id),'');render();}
+ if(action==='remove-enroll'){if(!confirm('ยกเลิกการลงทะเบียนนี้?'))return;await mutate(supabase.from('enrollments').delete().eq('id',id),'');render();}
+ if(action==='toggle-quiz'){const q=(await rows('quizzes','id,is_published')).find(x=>x.id===id);await mutate(supabase.from('quizzes').update({is_published:!q.is_published}).eq('id',id),'');render();}
+ if(action==='add-question'){const quiz=(await rows('quizzes','id,title')).find(x=>x.id===id);const root=$('hub-content');let box=root.querySelector('#question-builder');if(!box){box=document.createElement('div');box.id='question-builder';root.prepend(box);}box.innerHTML=panel('เพิ่มข้อคำถาม: '+esc(quiz?.title||''),`<form id="question-form" class="hub-form"><input type="hidden" name="quiz_id" value="${esc(id)}"><textarea name="question" required placeholder="พิมพ์คำถาม"></textarea><select name="question_type"><option value="multiple_choice">ปรนัย (เลือกตอบ)</option><option value="short_text">คำตอบสั้น</option></select><input name="options" placeholder="ตัวเลือก คั่นด้วย | เช่น A | B | C"><input name="points" type="number" min="1" value="1"><input name="position" type="number" min="1" value="1"><button class="hub-action primary">บันทึกข้อคำถาม</button></form>`);box.scrollIntoView({behavior:'smooth'});}}
 
-function esc(v){return String(v ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-function statusLabel(v){return ({approved:'อนุมัติแล้ว',pending:'รออนุมัติ',rejected:'ไม่อนุมัติ',active:'ใช้งาน',completed:'สำเร็จ',submitted:'ส่งแล้ว',graded:'ตรวจแล้ว'})[v] || v || '-';}
-function table(headers, rows){return `<div style="overflow:auto"><table class="hub-table"><thead><tr>${headers.map(x=>`<th>${x}</th>`).join('')}</tr></thead><tbody>${rows.length?rows.join(''):`<tr><td colspan="${headers.length}" class="hub-muted">ยังไม่มีข้อมูล</td></tr>`}</tbody></table></div>`;}
-function panel(title, body){return `<section class="hub-panel"><h3 style="margin:0 0 12px">${title}</h3>${body}</section>`;}
-function stat(label,n){return `<div class="hub-stat"><span class="hub-muted">${label}</span><b>${n}</b></div>`;}
-async function getRows(tableName, select='*', filters=[]){
-  let q=supabase.from(tableName).select(select);
-  for(const f of filters) q=q.eq(f[0],f[1]);
-  const {data,error}=await q;
-  if(error) throw error;
-  return data||[];
-}
-async function countRows(tableName, filters=[]){return (await getRows(tableName,'*',filters)).length;}
-function setTab(tab){currentTab=tab; renderDashboard();}
-function tabs(items){document.getElementById('hub-tabs').innerHTML=items.map(([id,label])=>`<button data-tab="${id}" class="${currentTab===id?'active':''}">${label}</button>`).join('');
- document.querySelectorAll('#hub-tabs button').forEach(b=>b.addEventListener('click',()=>setTab(b.dataset.tab)));}
+$('hub-content').addEventListener('click',async e=>{const b=e.target.closest('[data-action]');if(!b)return;try{await handleClick(b.dataset.action,b.dataset.id);}catch(err){alert('ดำเนินการไม่สำเร็จ: '+err.message);}});
+$('hub-content').addEventListener('submit',async e=>{const el=e.target;try{
+ if(el.id==='course-form'){e.preventDefault();await saveCourse(el);}
+ else if(el.id==='lesson-form'){e.preventDefault();await saveLesson(el);}
+ else if(el.id==='assignment-form'){e.preventDefault();const f=new FormData(el),due=f.get('due_at');const payload={lesson_id:f.get('lesson_id'),title:String(f.get('title')||'').trim(),description:String(f.get('description')||''),due_at:due?new Date(due).toISOString():null};await mutate(supabase.from('assignments').insert(payload),'');alert('สร้างงานมอบหมายแล้ว');render();}
+ else if(el.id==='quiz-form'){e.preventDefault();const f=new FormData(el);await mutate(supabase.from('quizzes').insert({lesson_id:f.get('lesson_id'),title:String(f.get('title')||'').trim(),pass_score:Number(f.get('pass_score')||60),is_published:false}),'');alert('สร้างแบบทดสอบแล้ว');render();}
+ else if(el.id==='question-form'){e.preventDefault();const f=new FormData(el),opts=String(f.get('options')||'').split('|').map(x=>x.trim()).filter(Boolean).map(x=>({label:x,value:x}));const max=await rows('quiz_questions','position',[['quiz_id',f.get('quiz_id')]]);await mutate(supabase.from('quiz_questions').insert({quiz_id:f.get('quiz_id'),question:String(f.get('question')||''),question_type:f.get('question_type'),options:opts,points:Number(f.get('points')||1),position:Number(f.get('position')||max.length+1)}),'');alert('เพิ่มข้อคำถามแล้ว');render();}
+ else if(el.id==='enroll-form'){e.preventDefault();const f=new FormData(el);await mutate(supabase.from('enrollments').insert({user_id:f.get('user_id'),course_id:f.get('course_id'),status:f.get('status')||'active'}),'');alert('ลงทะเบียนผู้เรียนแล้ว');render();}
+ else if(el.matches('[data-grade-form]')){e.preventDefault();const f=new FormData(el),grade=f.get('grade');await mutate(supabase.from('submissions').update({grade:grade===''?null:Number(grade),feedback:String(f.get('feedback')||''),status:'graded',graded_by:currentProfile.id,graded_at:new Date().toISOString()}).eq('id',el.dataset.gradeForm),'');alert('บันทึกผลการตรวจงานแล้ว');render();}
+ else if(el.matches('[data-submit-work]')){e.preventDefault();const f=new FormData(el);await mutate(supabase.from('submissions').insert({assignment_id:el.dataset.submitWork,student_id:currentProfile.id,content:String(f.get('content')||''),file_url:String(f.get('file_url')||'')||null,status:'submitted',submitted_at:new Date().toISOString()}),'');alert('ส่งงานเรียบร้อย');render();}
+ else if(el.matches('[data-take-quiz]')){e.preventDefault();const f=new FormData(el),answers={};for(const [k,v] of f.entries())if(k.startsWith('q_'))answers[k.slice(2)]=v;await mutate(supabase.from('quiz_attempts').insert({quiz_id:el.dataset.takeQuiz,student_id:currentProfile.id,answers,status:'submitted',started_at:new Date().toISOString(),submitted_at:new Date().toISOString()}),'');alert('ส่งคำตอบแบบทดสอบเรียบร้อย');render();}
+ }catch(err){alert('บันทึกไม่สำเร็จ: '+(err.message||err));}});
+$('hub-content').addEventListener('change',async e=>{const t=e.target;try{if(t.matches('[data-role-user]')||t.matches('[data-status-user]')){const id=t.dataset.roleUser||t.dataset.statusUser;const role=$(`[data-role-user="${id}"]`)?.value;const status=$(`[data-status-user="${id}"]`)?.value;const save=$(`button[data-action="save-user"][data-id="${id}"]`);if(save){save.dataset.newRole=role;save.dataset.newStatus=status;}}}catch(err){console.error(err);}});
+$('hub-content').addEventListener('click',async e=>{const b=e.target.closest('[data-action="save-user"]');if(!b)return;try{const role=$(`[data-role-user="${b.dataset.id}"]`).value,status=$(`[data-status-user="${b.dataset.id}"]`).value;await mutate(supabase.from('profiles').update({role,status,updated_at:new Date().toISOString()}).eq('id',b.dataset.id),'');await logAction('update_profile','profile',b.dataset.id,{role,status});alert('บันทึกข้อมูลสมาชิกแล้ว');render();}catch(err){alert('บันทึกสมาชิกไม่สำเร็จ: '+err.message);}});
+async function markLessonDone(id){const old=(await rows('lesson_progress','id,user_id,lesson_id,status',[['user_id',currentProfile.id],['lesson_id',id]]))[0];const payload={status:'completed',completed_at:new Date().toISOString(),updated_at:new Date().toISOString()};if(old)await mutate(supabase.from('lesson_progress').update(payload).eq('id',old.id),'');else await mutate(supabase.from('lesson_progress').insert({user_id:currentProfile.id,lesson_id:id,...payload}),'');alert('บันทึกความก้าวหน้าแล้ว');render();}
+$('hub-content').addEventListener('click',async e=>{const b=e.target.closest('[data-action="complete-lesson"]');if(!b)return;try{await markLessonDone(b.dataset.id);}catch(err){alert('บันทึกไม่สำเร็จ: '+err.message);}});
 
-async function renderDashboard(){
- const p=currentProfile, role=p.role, root=document.getElementById('hub-content');
- root.innerHTML='<div class="hub-panel">กำลังโหลดข้อมูล...</div>';
- try{
-  if(role==='admin') await renderAdmin(root);
-  else if(role==='instructor') await renderInstructor(root);
-  else await renderStudent(root);
-  document.querySelectorAll('#hub-tabs button').forEach(b=>b.classList.toggle('active',b.dataset.tab===currentTab));
- }catch(e){root.innerHTML=panel('เกิดข้อผิดพลาด',`<p>${esc(e.message)}</p><p class="hub-muted">ระบบจะแสดงเฉพาะข้อมูลที่ Supabase RLS อนุญาต</p>`);}
-}
-async function renderAdmin(root){
- const items=[['overview','ภาพรวม'],['users','สมาชิก'],['courses','หลักสูตร'],['submissions','งานที่ส่ง']];
- if(!items.some(x=>x[0]===currentTab)) currentTab='overview';
- tabs(items);
- if(currentTab==='overview'){
-  const [users,courses,lessons,enrollments,subs]=await Promise.all(['profiles','courses','lessons','enrollments','submissions'].map(t=>countRows(t)));
-  root.innerHTML=panel('ภาพรวมระบบ',`<div class="hub-grid">${stat('สมาชิก',users)}${stat('หลักสูตร',courses)}${stat('บทเรียน',lessons)}${stat('การลงทะเบียน',enrollments)}${stat('การส่งงาน',subs)}</div>`);
- }else if(currentTab==='users'){
-  const users=await getRows('profiles','id,email,full_name,role,status,created_at');
-  root.innerHTML=panel('จัดการสมาชิก',table(['ชื่อ','อีเมล','บทบาท','สถานะ','การดำเนินการ'],users.map(u=>`<tr><td>${esc(u.full_name)}</td><td>${esc(u.email)}</td><td>${esc(u.role)}</td><td>${esc(statusLabel(u.status))}</td><td>${u.status!=='approved'?`<button class="hub-action primary" data-approve="${esc(u.id)}">อนุมัติ</button>`:''}</td></tr>`)));
-  root.querySelectorAll('[data-approve]').forEach(b=>b.addEventListener('click',()=>approveUser(b.dataset.approve)));
- }else if(currentTab==='courses'){
-  const courses=await getRows('courses','id,title,slug,published,created_by,created_at');
-  root.innerHTML=panel('หลักสูตรทั้งหมด',table(['ชื่อหลักสูตร','Slug','เผยแพร่','ผู้สร้าง'],courses.map(c=>`<tr><td>${esc(c.title)}</td><td>${esc(c.slug)}</td><td>${c.published?'เผยแพร่':'ฉบับร่าง'}</td><td>${esc(c.created_by)}</td></tr>`)));
- }else{
-  const rows=await getRows('submissions','id,assignment_id,student_id,status,grade,submitted_at');
-  root.innerHTML=panel('รายการส่งงาน',table(['ผู้เรียน','งาน','สถานะ','คะแนน','วันที่ส่ง'],rows.map(s=>`<tr><td>${esc(s.student_id)}</td><td>${esc(s.assignment_id)}</td><td>${esc(statusLabel(s.status))}</td><td>${esc(s.grade)}</td><td>${esc(s.submitted_at)}</td></tr>`)));
- }
-}
-async function approveUser(id){
- if(!confirm('ยืนยันอนุมัติบัญชีนี้?')) return;
- const {error}=await supabase.from('profiles').update({status:'approved'}).eq('id',id);
- if(error){alert('อนุมัติไม่สำเร็จ: '+error.message);return;}
- alert('อนุมัติสมาชิกแล้ว');renderDashboard();
-}
-async function renderInstructor(root){
- const courses=await getRows('courses','id,title,slug,description,published,created_by,created_at',[['created_by',currentProfile.id]]);
- const items=[['overview','ภาพรวม'],['courses','หลักสูตรของฉัน'],['lessons','บทเรียน'],['submissions','ตรวจงาน']];
- if(!items.some(x=>x[0]===currentTab)) currentTab='overview';
- tabs(items);
- if(currentTab==='overview'){
-  const courseIds=courses.map(c=>c.id);
-  const lessons=courseIds.length?(await getRows('lessons')).filter(l=>courseIds.includes(l.course_id)):[];
-  const subs=await getRows('submissions');
-  root.innerHTML=panel('ภาพรวมผู้สอน',`<div class="hub-grid">${stat('หลักสูตรของฉัน',courses.length)}${stat('บทเรียน',lessons.length)}${stat('งานที่ส่งทั้งหมด',subs.length)}</div>`);
- }else if(currentTab==='courses'){
-  root.innerHTML=panel('หลักสูตรของฉัน',`<form id="course-create" class="hub-form"><input name="title" required placeholder="ชื่อหลักสูตร"><input name="slug" placeholder="slug (ไม่บังคับ)"><textarea name="description" placeholder="รายละเอียดหลักสูตร"></textarea><button class="hub-action primary">สร้างหลักสูตร</button></form>`+table(['ชื่อหลักสูตร','สถานะ','วันที่สร้าง'],courses.map(c=>`<tr><td>${esc(c.title)}</td><td>${c.published?'เผยแพร่':'ฉบับร่าง'}</td><td>${esc(c.created_at)}</td></tr>`)));
-  document.getElementById('course-create').addEventListener('submit',async e=>{e.preventDefault();const f=new FormData(e.target);const title=f.get('title').trim();const slug=(f.get('slug')||title).trim().toLowerCase().replace(/[^a-z0-9ก-๙]+/g,'-');const {error}=await supabase.from('courses').insert({title,slug,description:f.get('description'),created_by:currentProfile.id,published:false});if(error)alert('สร้างหลักสูตรไม่สำเร็จ: '+error.message);else{alert('สร้างหลักสูตรแล้ว');renderDashboard();}});
- }else if(currentTab==='lessons'){
-  const ids=courses.map(c=>c.id);
-  const lessons=ids.length?(await getRows('lessons')).filter(l=>ids.includes(l.course_id)):[];
-  root.innerHTML=panel('บทเรียน',`<form id="lesson-create" class="hub-form"><select name="course_id" required><option value="">เลือกหลักสูตร</option>${courses.map(c=>`<option value="${esc(c.id)}">${esc(c.title)}</option>`).join('')}</select><input name="title" required placeholder="ชื่อบทเรียน"><input name="position" type="number" min="1" value="1"><textarea name="content" placeholder="เนื้อหาบทเรียน"></textarea><button class="hub-action primary">เพิ่มบทเรียน</button></form>`+table(['บทเรียน','หลักสูตร','ลำดับ','เผยแพร่'],lessons.map(l=>`<tr><td>${esc(l.title)}</td><td>${esc(courses.find(c=>c.id===l.course_id)?.title)}</td><td>${esc(l.position)}</td><td>${l.is_published?'เผยแพร่':'ฉบับร่าง'}</td></tr>`)));
-  document.getElementById('lesson-create').addEventListener('submit',async e=>{e.preventDefault();const f=new FormData(e.target);const {error}=await supabase.from('lessons').insert({course_id:f.get('course_id'),title:f.get('title'),position:Number(f.get('position')),content:f.get('content'),is_published:false});if(error)alert('เพิ่มบทเรียนไม่สำเร็จ: '+error.message);else{alert('เพิ่มบทเรียนแล้ว');renderDashboard();}});
- }else{
-  const all=await getRows('submissions','id,assignment_id,student_id,status,grade,feedback,submitted_at');
-  const assign=await getRows('assignments','id,lesson_id,title');
-  const lessonIds=(await getRows('lessons','id,course_id')).filter(l=>courses.some(c=>c.id===l.course_id)).map(l=>l.id);
-  const assignmentIds=assign.filter(a=>lessonIds.includes(a.lesson_id)).map(a=>a.id);
-  const rows=all.filter(s=>assignmentIds.includes(s.assignment_id));
-  root.innerHTML=panel('งานที่ส่งในหลักสูตรของฉัน',table(['ผู้เรียน','งาน','สถานะ','คะแนน','Feedback'],rows.map(s=>`<tr><td>${esc(s.student_id)}</td><td>${esc(assign.find(a=>a.id===s.assignment_id)?.title)}</td><td>${esc(statusLabel(s.status))}</td><td>${esc(s.grade)}</td><td>${esc(s.feedback)}</td></tr>`)));
- }
-}
-async function renderStudent(root){
- const enroll=await getRows('enrollments','id,course_id,status,enrolled_at',[['user_id',currentProfile.id]]);
- const courseIds=enroll.filter(e=>e.status==='active').map(e=>e.course_id);
- const courses=courseIds.length?(await getRows('courses','id,title,description,published')).filter(c=>courseIds.includes(c.id)&&c.published):[];
- const items=[['overview','ภาพรวม'],['courses','หลักสูตรของฉัน'],['assignments','งานที่ได้รับ'],['progress','ความก้าวหน้า']];
- if(!items.some(x=>x[0]===currentTab)) currentTab='overview';
- tabs(items);
- const lessons=courseIds.length?(await getRows('lessons','id,course_id,title,position,is_published')).filter(l=>courseIds.includes(l.course_id)&&l.is_published):[];
- if(currentTab==='overview'){
-  const progress=await getRows('lesson_progress','id,lesson_id,status,completed_at',[['user_id',currentProfile.id]]);
-  root.innerHTML=panel('ภาพรวมการเรียน',`<div class="hub-grid">${stat('หลักสูตรที่ลงทะเบียน',courses.length)}${stat('บทเรียนที่เปิดเรียน',lessons.length)}${stat('บทเรียนที่บันทึกความก้าวหน้า',progress.length)}</div>`);
- }else if(currentTab==='courses'){
-  const courseRows=courses.map(c => '<tr><td>'+esc(c.title)+'</td><td>'+esc(c.description)+'</td><td><span class="hub-badge">ลงทะเบียนแล้ว</span></td></tr>').join('');
-  const lessonRows=lessons.map(l => '<tr><td>'+esc(l.title)+'</td><td>'+esc((courses.find(c=>c.id===l.course_id)||{}).title)+'</td><td>'+esc(l.position)+'</td></tr>').join('');
-  root.innerHTML=panel('หลักสูตรของฉัน',table(['หลักสูตร','รายละเอียด','สถานะ'],courseRows))+panel('บทเรียนที่เปิดให้เรียน',table(['บทเรียน','หลักสูตร','ลำดับ'],lessonRows));
- }else if(currentTab==='assignments'){
-  const lessonIds=lessons.map(l=>l.id);
-  const assignments=lessonIds.length?(await getRows('assignments')).filter(a=>lessonIds.includes(a.lesson_id)):[];
-  const submissions=await getRows('submissions','id,assignment_id,status,grade,submitted_at',[['student_id',currentProfile.id]]);
-  root.innerHTML=panel('งานที่ได้รับ',table(['งาน','กำหนดส่ง','สถานะ','คะแนน'],assignments.map(a=>{const s=submissions.find(x=>x.assignment_id===a.id);return `<tr><td>${esc(a.title)}<br><span class="hub-muted">${esc(a.description)}</span></td><td>${esc(a.due_at)}</td><td>${esc(statusLabel(s?.status||'ยังไม่ส่ง'))}</td><td>${esc(s?.grade??'-')}</td></tr>`;})));
- }else{
-  const progress=await getRows('lesson_progress','lesson_id,status,completed_at,updated_at',[['user_id',currentProfile.id]]);
-  root.innerHTML=panel('ความก้าวหน้าของฉัน',table(['บทเรียน','สถานะ','วันที่สำเร็จ'],progress.map(p=>`<tr><td>${esc(lessons.find(l=>l.id===p.lesson_id)?.title||p.lesson_id)}</td><td>${esc(statusLabel(p.status))}</td><td>${esc(p.completed_at)}</td></tr>`)));
- }
-}
-
-async function openDashboard(profile){
- currentProfile=profile;
- closeLogin();
- dashboard.style.display='block';
- document.getElementById('hub-welcome').textContent=`สวัสดี ${profile.full_name||profile.email||''}`;
- document.getElementById('hub-role').textContent=`บัญชีผู้ใช้: ${profile.role} • สถานะ: ${statusLabel(profile.status)}`;
- loginBtn.textContent='ออกจากระบบ';
- currentTab='';
- await renderDashboard();
- dashboard.scrollIntoView({behavior:'smooth',block:'start'});
-}
-async function doLogout(){
- const {error}=await supabase.auth.signOut();
- if(error){alert('ออกจากระบบไม่สำเร็จ: '+error.message);return;}
- currentProfile=null;dashboard.style.display='none';loginBtn.textContent='เข้าสู่ระบบ';currentTab='';
-}
-form.addEventListener('submit',async e=>{
- e.preventDefault();
- 
- const submit=document.getElementById('hub-login-submit');submit.disabled=true;submit.textContent='กำลังตรวจสอบ...';msg.textContent='';
- try{
-  const email=document.getElementById('hub-email').value.trim();
-  const password=document.getElementById('hub-password').value;
-  const {data,error}=await supabase.auth.signInWithPassword({email,password});if(error)throw error;
-  const {data:profile,error:profileError}=await supabase.from('profiles').select('id,email,full_name,role,status').eq('id',data.user.id).single();
-  if(profileError||!profile){await supabase.auth.signOut();throw new Error('ไม่พบข้อมูลโปรไฟล์ กรุณาติดต่อผู้ดูแลระบบ');}
-  if(profile.status!=='approved'){await supabase.auth.signOut();throw new Error('บัญชีนี้ยังไม่ได้รับอนุมัติให้เข้าใช้งาน');}
-  if(!['admin','instructor','student'].includes(profile.role)){await supabase.auth.signOut();throw new Error('ไม่พบบทบาทผู้ใช้งานที่ถูกต้อง');}
-  await openDashboard(profile);
- }catch(err){msg.textContent=err.message||'เข้าสู่ระบบไม่สำเร็จ';}
- finally{submit.disabled=false;submit.textContent='เข้าสู่ระบบ';}
-});
-const {data:{session}}=await supabase.auth.getSession();
-if(session){
- const {data:profile}=await supabase.from('profiles').select('id,email,full_name,role,status').eq('id',session.user.id).maybeSingle();
- if(profile&&profile.status==='approved'&&['admin','instructor','student'].includes(profile.role)) await openDashboard(profile);
-}
+async function openDashboard(profile){currentProfile=profile;closeLogin();dashboard.style.display='block';$('hub-welcome').textContent=`สวัสดี ${profile.full_name||profile.email||''}`;$('hub-role').textContent=`บัญชีผู้ใช้: ${profile.role} • สถานะ: ${labelStatus(profile.status)}`;loginBtn.textContent='ออกจากระบบ';currentTab='overview';await render();dashboard.scrollIntoView({behavior:'smooth',block:'start'});}
+async function logout(){const {error}=await supabase.auth.signOut();if(error){alert('ออกจากระบบไม่สำเร็จ: '+error.message);return;}currentProfile=null;dashboard.style.display='none';loginBtn.textContent='เข้าสู่ระบบ';currentTab='overview';}
+form.addEventListener('submit',async e=>{e.preventDefault();const submit=$('hub-login-submit');submit.disabled=true;submit.textContent='กำลังตรวจสอบ...';msg.textContent='';try{const email=$('hub-email').value.trim(),password=$('hub-password').value;const {data,error}=await supabase.auth.signInWithPassword({email,password});if(error)throw error;const {data:profile,error:pe}=await supabase.from('profiles').select('id,email,full_name,role,status').eq('id',data.user.id).single();if(pe||!profile){await supabase.auth.signOut();throw new Error('ไม่พบข้อมูลโปรไฟล์ กรุณาติดต่อผู้ดูแลระบบ');}if(profile.status!=='approved'){await supabase.auth.signOut();throw new Error('บัญชียังไม่ได้รับอนุมัติ');}if(!['admin','instructor','student'].includes(profile.role)){await supabase.auth.signOut();throw new Error('ไม่พบบทบาทผู้ใช้งานที่ถูกต้อง');}await openDashboard(profile);}catch(err){msg.textContent=err.message||'เข้าสู่ระบบไม่สำเร็จ';}finally{submit.disabled=false;submit.textContent='เข้าสู่ระบบ';}});
+const {data:{session}}=await supabase.auth.getSession();if(session){const {data:profile}=await supabase.from('profiles').select('id,email,full_name,role,status').eq('id',session.user.id).maybeSingle();if(profile&&profile.status==='approved'&&['admin','instructor','student'].includes(profile.role))await openDashboard(profile);}
 </script>
 
 </body>
