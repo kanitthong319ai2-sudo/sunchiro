@@ -1,5 +1,16 @@
 # Release Notes — AI Multimedia Learning Hub
 
+## v1.5 (2026-11-05) — รองรับ Google Gemini (ฟรี)
+
+- `generate-course/index.ts`: เลือกผู้ให้บริการ AI จาก Secrets
+  - มี `GEMINI_API_KEY` → ใช้ Gemini ผ่าน OpenAI-compatible endpoint (`gemini-2.5-flash`, เปลี่ยนได้ด้วย `GEMINI_MODEL`)
+  - ไม่มี → ใช้ OpenAI เหมือนเดิม (`OPENAI_API_KEY`, `OPENAI_MODEL`)
+  - บังคับเลือกได้ด้วย `AI_PROVIDER=gemini` หรือ `AI_PROVIDER=openai`
+  - ตรวจรูปแบบ key ทั้งสองแบบ, รองรับรูปแบบ error ของ Gemini, แจ้ง 429 เมื่อโควตาฟรีหมด
+  - response มี `provider` บอกว่าใช้ AI เจ้าไหน
+- `index.html`: ปรับข้อความแนะนำการตั้งค่า
+- ข้อควรรู้: Gemini รุ่นฟรีจำกัดจำนวนครั้ง/นาที/วัน และ Google อาจใช้ข้อมูลที่ส่งไปปรับปรุงบริการ — ห้ามใส่ข้อมูลส่วนบุคคลของผู้เรียน
+
 ## v1.4.1 (2026-11-05) — ตรวจรูปแบบ OPENAI_API_KEY
 
 ### หลักฐาน

@@ -285,7 +285,7 @@ function renderAICourseCreator(){
  <div class="wide hub-inline"><button class="hub-action primary" type="submit" id="ai-generate-btn">✦ สร้างโครงสร้างและเนื้อหาด้วย AI</button><span class="hub-ai-status">ระบบจะสร้างฉบับร่างเพื่อให้ตรวจสอบก่อนบันทึก</span></div>
  </form>`)}
  <div id="ai-course-preview"></div>
- ${panel('ขั้นตอนการทำงาน',`<ol><li>กรอกข้อมูลหลักสูตรและข้อกำหนดต้นทาง</li><li>AI สร้างหน่วยเรียน บทเรียนฉบับละเอียด กิจกรรม และแผนสอน</li><li>ตรวจชั่วโมงเรียนและข้อควรตรวจสอบ</li><li>กดบันทึกเพื่อสร้างหลักสูตรฉบับร่าง หน่วยเรียน และบทเรียนใน LMS</li><li>ผู้ดูแล/ผู้เชี่ยวชาญตรวจแก้ ก่อนเปิดเผยแพร่</li></ol>`,notice('การสร้างด้วย AI ต้องตั้งค่า Supabase Edge Function และ OPENAI_API_KEY ตามคู่มือที่แนบมา ระบบไม่เปิดเผย API Key บนหน้าเว็บไซต์.'))}`;
+ ${panel('ขั้นตอนการทำงาน',`<ol><li>กรอกข้อมูลหลักสูตรและข้อกำหนดต้นทาง</li><li>AI สร้างหน่วยเรียน บทเรียนฉบับละเอียด กิจกรรม และแผนสอน</li><li>ตรวจชั่วโมงเรียนและข้อควรตรวจสอบ</li><li>กดบันทึกเพื่อสร้างหลักสูตรฉบับร่าง หน่วยเรียน และบทเรียนใน LMS</li><li>ผู้ดูแล/ผู้เชี่ยวชาญตรวจแก้ ก่อนเปิดเผยแพร่</li></ol>`,notice('การสร้างด้วย AI ต้องตั้งค่า GEMINI_API_KEY (ฟรี) หรือ OPENAI_API_KEY ใน Supabase Edge Function Secrets ระบบไม่เปิดเผย API Key บนหน้าเว็บไซต์.'))}`;
 }
 function renderAIPreview(data,warnings=[]){
  const units=data.units||[];

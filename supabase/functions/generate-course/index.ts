@@ -1,4 +1,4 @@
-// generate-course v1.4.1 — ส่ง status code ที่ถูกต้อง + เขียน log ทุก error (ดู RELEASE_NOTES.md)
+// generate-course v1.5 — รองรับ Gemini (ฟรี) และ OpenAI; ส่ง status code ที่ถูกต้อง + เขียน log ทุก error (ดู RELEASE_NOTES.md)
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 class HttpError extends Error {
@@ -50,24 +50,33 @@ Deno.serve(async (req) => {
     const body = await req.json();
     const required = ["title", "total_hours", "audience", "objectives"];
     for (const key of required) if (!body[key]) throw new HttpError(400, `ข้อมูลไม่ครบ: ${key}`);
-    const apiKey = Deno.env.get("OPENAI_API_KEY")?.trim();
-    if (apiKey && !/^[\x21-\x7E]+$/.test(apiKey)) {
+    // v1.5: เลือกผู้ให้บริการ AI — ถ้ามี GEMINI_API_KEY จะใช้ Gemini (ฟรี) ก่อน, ตั้ง AI_PROVIDER=openai เพื่อบังคับใช้ OpenAI
+    const provider = (Deno.env.get("AI_PROVIDER") || (Deno.env.get("GEMINI_API_KEY") ? "gemini" : "openai")).trim().toLowerCase();
+    const cfg = provider === "gemini"
+      ? { name: "Gemini", keyName: "GEMINI_API_KEY", prefix: "AIza", url: "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions", model: Deno.env.get("GEMINI_MODEL")?.trim() || "gemini-2.5-flash" }
+      : { name: "OpenAI", keyName: "OPENAI_API_KEY", prefix: "sk-", url: "https://api.openai.com/v1/chat/completions", model: Deno.env.get("OPENAI_MODEL")?.trim() || "gpt-4.1-mini" };
+    const apiKey = Deno.env.get(cfg.keyName)?.trim();
+    if (!apiKey) throw new HttpError(500, `ยังไม่ได้ตั้งค่า ${cfg.keyName} ใน Supabase Edge Function Secrets`);
+    if (!/^[!-~]+$/.test(apiKey)) {
       // ไม่ log ค่า key — บอกแค่ตำแหน่งและรหัสอักขระที่ผิด เพื่อช่วยหาสาเหตุ
-      const bad = [...apiKey].findIndex((c) => !/^[\x21-\x7E]$/.test(c));
-      const code = apiKey.codePointAt(bad)?.toString(16).toUpperCase().padStart(4, "0");
-      console.error("invalid OPENAI_API_KEY", { length: apiKey.length, badIndex: bad, badChar: `U+${code}` });
-      throw new HttpError(500, `OPENAI_API_KEY ใน Supabase Secrets มีอักขระที่ไม่ถูกต้อง (ตำแหน่งที่ ${bad + 1} จาก ${apiKey.length}, U+${code}) — กรุณาตั้งค่าใหม่โดยคัดลอกเฉพาะ key ที่ขึ้นต้นด้วย sk-`);
+      const chars = [...apiKey];
+      const bad = chars.findIndex((c) => !/^[!-~]$/.test(c));
+      const code = chars[bad].codePointAt(0)!.toString(16).toUpperCase().padStart(4, "0");
+      console.error("invalid api key", { keyName: cfg.keyName, length: chars.length, badIndex: bad, badChar: `U+${code}` });
+      throw new HttpError(500, `${cfg.keyName} ใน Supabase Secrets มีอักขระที่ไม่ถูกต้อง (ตำแหน่งที่ ${bad + 1} จาก ${chars.length}, U+${code}) — กรุณาวาง key ใหม่ที่ขึ้นต้นด้วย ${cfg.prefix}`);
     }
-    if (apiKey && !apiKey.startsWith("sk-")) console.warn("OPENAI_API_KEY does not start with sk-", { length: apiKey.length });
-    if (!apiKey) throw new HttpError(500,"ยังไม่ได้ตั้งค่า OPENAI_API_KEY ใน Supabase Edge Function Secrets");
-    const userPrompt = `สร้างร่างหลักสูตรจากข้อมูลต่อไปนี้\n${JSON.stringify(body, null, 2)}\n\nให้เขียนเนื้อหาบทเรียนอย่างละเอียด เหมาะกับชั่วโมงและกลุ่มเป้าหมาย ห้ามเปลี่ยนข้อกำหนดต้นทาง ถ้าชั่วโมงย่อยที่ผู้ใช้ระบุรวมกันไม่ตรงกับชั่วโมงรวม ให้คงชั่วโมงรวมและแจ้งความไม่สอดคล้องใน notes_to_reviewer แทนการแก้เงียบ ๆ`;
-    const model = Deno.env.get("OPENAI_MODEL") || "gpt-4.1-mini";
+    if (!apiKey.startsWith(cfg.prefix)) console.warn(`${cfg.keyName} does not start with ${cfg.prefix}`, { length: apiKey.length });
+    const userPrompt = `สร้างร่างหลักสูตรจากข้อมูลต่อไปนี้
+${JSON.stringify(body, null, 2)}
+
+ให้เขียนเนื้อหาบทเรียนอย่างละเอียด เหมาะกับชั่วโมงและกลุ่มเป้าหมาย ห้ามเปลี่ยนข้อกำหนดต้นทาง ถ้าชั่วโมงย่อยที่ผู้ใช้ระบุรวมกันไม่ตรงกับชั่วโมงรวม ให้คงชั่วโมงรวมและแจ้งความไม่สอดคล้องใน notes_to_reviewer แทนการแก้เงียบ ๆ`;
+    const model = cfg.model;
     const started = Date.now();
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), OPENAI_TIMEOUT_MS);
     let response: Response;
     try {
-      response = await fetch("https://api.openai.com/v1/chat/completions", {
+      response = await fetch(cfg.url, {
         method: "POST",
         signal: controller.signal,
         headers: { "Authorization": `Bearer ${apiKey}`, "Content-Type": "application/json" },
@@ -80,19 +89,23 @@ Deno.serve(async (req) => {
       });
     } catch (e) {
       if (e instanceof DOMException && e.name === "AbortError") {
-        throw new HttpError(504, `OpenAI ตอบช้าเกิน ${OPENAI_TIMEOUT_MS / 1000} วินาที (model: ${model}) — ลองลดขอบเขตเนื้อหาหรือแบ่งสร้างทีละหน่วย`);
+        throw new HttpError(504, `${cfg.name} ตอบช้าเกิน ${OPENAI_TIMEOUT_MS / 1000} วินาที (model: ${model}) — ลองลดขอบเขตเนื้อหาหรือแบ่งสร้างทีละหน่วย`);
       }
-      throw new HttpError(502, `เชื่อมต่อ OpenAI ไม่ได้: ${e instanceof Error ? e.message : String(e)}`);
+      throw new HttpError(502, `เชื่อมต่อ ${cfg.name} ไม่ได้: ${e instanceof Error ? e.message : String(e)}`);
     } finally {
       clearTimeout(timer);
     }
     const raw = await response.text();
-    console.log("openai response", { status: response.status, model, ms: Date.now() - started, bytes: raw.length });
+    console.log("ai response", { provider: cfg.name, status: response.status, model, ms: Date.now() - started, bytes: raw.length });
     let result: any;
     try { result = JSON.parse(raw); } catch {
-      throw new HttpError(502, `OpenAI ตอบกลับไม่ใช่ JSON (HTTP ${response.status}): ${raw.slice(0, 300)}`);
+      throw new HttpError(502, `${cfg.name} ตอบกลับไม่ใช่ JSON (HTTP ${response.status}): ${raw.slice(0, 300)}`);
     }
-    if (!response.ok) throw new HttpError(502, `OpenAI error ${response.status} (model: ${model}): ${result?.error?.message || raw.slice(0, 300)}`);
+    if (!response.ok) {
+      const apiMsg = result?.error?.message || result?.[0]?.error?.message || raw.slice(0, 300);
+      const hint = response.status === 429 ? " — ใช้โควตาฟรีครบแล้ว รอสักครู่แล้วลองใหม่" : "";
+      throw new HttpError(response.status === 429 ? 429 : 502, `${cfg.name} error ${response.status} (model: ${model}): ${apiMsg}${hint}`);
+    }
     const finish = result?.choices?.[0]?.finish_reason ?? "-";
     const content = result?.choices?.[0]?.message?.content;
     if (!content) throw new HttpError(502, `AI ไม่ส่งเนื้อหากลับมา (finish_reason: ${finish})`);
@@ -108,7 +121,7 @@ Deno.serve(async (req) => {
     for (const u of blueprint.units || []) {
       if (Number(u.theory_hours || 0) + Number(u.practice_hours || 0) !== Number(u.hours || 0)) warnings.push(`หน่วย ${u.unit_no}: ชั่วโมงทฤษฎีและปฏิบัติไม่รวมเท่าชั่วโมงหน่วย`);
     }
-    return new Response(JSON.stringify({ blueprint, warnings, model }), {
+    return new Response(JSON.stringify({ blueprint, warnings, model, provider: cfg.name }), {
       headers: { ...cors, "Content-Type": "application/json" },
     });
   } catch (error) {
