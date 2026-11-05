@@ -1,5 +1,18 @@
 # Release Notes — AI Multimedia Learning Hub
 
+## v1.4.1 (2026-11-05) — ตรวจรูปแบบ OPENAI_API_KEY
+
+### หลักฐาน
+หลังขึ้น v1.4 หน้าเว็บแสดง: `เชื่อมต่อ OpenAI ไม่ได้: Failed to construct 'Request': 'headers' of 'RequestInit' (Argument 2) is not a valid ByteString (HTTP 502)`
+แปลว่าค่า `OPENAI_API_KEY` ใน Supabase Secrets มีอักขระนอกช่วง ASCII (เช่น ตัวอักษรไทย, zero-width space, BOM, เครื่องหมายคำพูดแบบโค้ง)
+จึงใส่ลง header `Authorization` ไม่ได้ — คำขอไม่ถึง OpenAI เลย
+
+### สิ่งที่แก้
+- `generate-course/index.ts`: `trim()` key และตรวจว่าเป็น ASCII ที่พิมพ์ได้เท่านั้น ถ้าไม่ผ่าน ตอบ 500 พร้อมตำแหน่งและรหัสอักขระที่ผิด (ไม่เปิดเผยค่า key)
+
+### วิธีแก้ secret (ผู้ใช้ทำเอง)
+ตั้งค่าใหม่ใน Dashboard › Edge Functions › Secrets หรือ `npx supabase secrets set OPENAI_API_KEY=sk-...` โดยวางเฉพาะ key
+
 ## v1.4 (2026-11-05) — วินิจฉัยปัญหา "Edge Function returned a non-2xx status code"
 
 ### ปัญหาที่พบจากการตรวจไฟล์จริง

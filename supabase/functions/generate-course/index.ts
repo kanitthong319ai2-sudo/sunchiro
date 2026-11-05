@@ -1,4 +1,4 @@
-// generate-course v1.4 — ส่ง status code ที่ถูกต้อง + เขียน log ทุก error (ดู RELEASE_NOTES.md)
+// generate-course v1.4.1 — ส่ง status code ที่ถูกต้อง + เขียน log ทุก error (ดู RELEASE_NOTES.md)
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 class HttpError extends Error {
@@ -50,7 +50,15 @@ Deno.serve(async (req) => {
     const body = await req.json();
     const required = ["title", "total_hours", "audience", "objectives"];
     for (const key of required) if (!body[key]) throw new HttpError(400, `ข้อมูลไม่ครบ: ${key}`);
-    const apiKey = Deno.env.get("OPENAI_API_KEY");
+    const apiKey = Deno.env.get("OPENAI_API_KEY")?.trim();
+    if (apiKey && !/^[\x21-\x7E]+$/.test(apiKey)) {
+      // ไม่ log ค่า key — บอกแค่ตำแหน่งและรหัสอักขระที่ผิด เพื่อช่วยหาสาเหตุ
+      const bad = [...apiKey].findIndex((c) => !/^[\x21-\x7E]$/.test(c));
+      const code = apiKey.codePointAt(bad)?.toString(16).toUpperCase().padStart(4, "0");
+      console.error("invalid OPENAI_API_KEY", { length: apiKey.length, badIndex: bad, badChar: `U+${code}` });
+      throw new HttpError(500, `OPENAI_API_KEY ใน Supabase Secrets มีอักขระที่ไม่ถูกต้อง (ตำแหน่งที่ ${bad + 1} จาก ${apiKey.length}, U+${code}) — กรุณาตั้งค่าใหม่โดยคัดลอกเฉพาะ key ที่ขึ้นต้นด้วย sk-`);
+    }
+    if (apiKey && !apiKey.startsWith("sk-")) console.warn("OPENAI_API_KEY does not start with sk-", { length: apiKey.length });
     if (!apiKey) throw new HttpError(500,"ยังไม่ได้ตั้งค่า OPENAI_API_KEY ใน Supabase Edge Function Secrets");
     const userPrompt = `สร้างร่างหลักสูตรจากข้อมูลต่อไปนี้\n${JSON.stringify(body, null, 2)}\n\nให้เขียนเนื้อหาบทเรียนอย่างละเอียด เหมาะกับชั่วโมงและกลุ่มเป้าหมาย ห้ามเปลี่ยนข้อกำหนดต้นทาง ถ้าชั่วโมงย่อยที่ผู้ใช้ระบุรวมกันไม่ตรงกับชั่วโมงรวม ให้คงชั่วโมงรวมและแจ้งความไม่สอดคล้องใน notes_to_reviewer แทนการแก้เงียบ ๆ`;
     const model = Deno.env.get("OPENAI_MODEL") || "gpt-4.1-mini";
