@@ -346,7 +346,9 @@ async function renderStudent(root){
   const progress=await getRows('lesson_progress','id,lesson_id,status,completed_at',[['user_id',currentProfile.id]]);
   root.innerHTML=panel('ภาพรวมการเรียน',`<div class="hub-grid">${stat('หลักสูตรที่ลงทะเบียน',courses.length)}${stat('บทเรียนที่เปิดเรียน',lessons.length)}${stat('บทเรียนที่บันทึกความก้าวหน้า',progress.length)}</div>`);
  }else if(currentTab==='courses'){
-  root.innerHTML=panel('หลักสูตรของฉัน',table(['หลักสูตร','รายละเอียด','สถานะ'],courses.map(c=>`<tr><td>${esc(c.title)}</td><td>${esc(c.description)}</td><td><span class="hub-badge">ลงทะเบียนแล้ว</span></td></tr>`))+panel('บทเรียนที่เปิดให้เรียน',table(['บทเรียน','หลักสูตร','ลำดับ'],lessons.map(l=>`<tr><td>${esc(l.title)}</td><td>${esc(courses.find(c=>c.id===l.course_id)?.title)}</td><td>${esc(l.position)}</td></tr>`)));
+  const courseRows=courses.map(c => '<tr><td>'+esc(c.title)+'</td><td>'+esc(c.description)+'</td><td><span class="hub-badge">ลงทะเบียนแล้ว</span></td></tr>').join('');
+  const lessonRows=lessons.map(l => '<tr><td>'+esc(l.title)+'</td><td>'+esc((courses.find(c=>c.id===l.course_id)||{}).title)+'</td><td>'+esc(l.position)+'</td></tr>').join('');
+  root.innerHTML=panel('หลักสูตรของฉัน',table(['หลักสูตร','รายละเอียด','สถานะ'],courseRows))+panel('บทเรียนที่เปิดให้เรียน',table(['บทเรียน','หลักสูตร','ลำดับ'],lessonRows));
  }else if(currentTab==='assignments'){
   const lessonIds=lessons.map(l=>l.id);
   const assignments=lessonIds.length?(await getRows('assignments')).filter(a=>lessonIds.includes(a.lesson_id)):[];
