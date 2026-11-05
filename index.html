@@ -1,0 +1,185 @@
+
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Multimedia Learning Hub | สพร.11 สุราษฎร์ธานี</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap');
+:root{--navy:#10233f;--blue:#2563eb;--cyan:#06b6d4;--ink:#17243a;--muted:#64748b;--bg:#f4f7fc;--white:#fff}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Noto Sans Thai',sans-serif;line-height:1.75}
+a{text-decoration:none;color:inherit}
+button{font:inherit;cursor:pointer}
+nav{background:#fff;border-bottom:1px solid #e5eaf2;position:sticky;top:0;z-index:10}
+.navin{max-width:1150px;margin:auto;padding:12px 22px;display:flex;align-items:center;justify-content:space-between;gap:15px}
+.brand{font-family:Kanit,sans-serif;font-size:19px;font-weight:600;color:var(--navy)}
+.brand span{color:var(--blue)}
+.navlinks{display:flex;gap:20px;font-size:13px;color:#526078}
+.navlinks a:hover{color:var(--blue)}
+.hero{background:linear-gradient(120deg,#10233f,#174b83 65%,#087eaa);color:white;padding:75px 22px 85px;position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;width:420px;height:420px;border:1px solid #ffffff25;border-radius:50%;right:-90px;top:-150px;box-shadow:0 0 0 45px #ffffff08,0 0 0 95px #ffffff08}
+.heroin{max-width:1100px;margin:auto;position:relative;z-index:1}
+.tag{display:inline-block;border:1px solid #ffffff55;border-radius:30px;padding:5px 14px;font-size:12px;letter-spacing:.3px}
+h1{font-family:Kanit,sans-serif;font-size:clamp(34px,5vw,56px);line-height:1.25;margin:22px 0 12px;max-width:780px}
+.hero p{color:#dbeafe;max-width:680px;font-size:16px}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:27px}
+.btn{display:inline-block;padding:11px 21px;border-radius:10px;font-weight:600;font-size:14px;border:0}
+.primary{background:#fff;color:#174b83}
+.outline{border:1px solid #ffffff88;color:white}
+.stats{display:flex;gap:35px;flex-wrap:wrap;margin-top:45px}
+.stat strong{font-family:Kanit;font-size:27px;display:block}
+.stat small{color:#dbeafe}
+section{max-width:1100px;margin:65px auto;padding:0 22px}
+.eyebrow{color:var(--blue);font-weight:700;font-size:12px;letter-spacing:1px}
+h2{font-family:Kanit,sans-serif;font-size:30px;line-height:1.35;margin:5px 0 10px;color:var(--navy)}
+.lead{color:var(--muted);margin:0 0 25px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:17px}
+.card{background:white;border:1px solid #e6ebf3;border-radius:16px;padding:22px;box-shadow:0 5px 20px #14294a08}
+.card h3{font-family:Kanit;font-size:19px;margin:9px 0 5px;color:var(--navy)}
+.card p{font-size:13px;color:var(--muted);margin:5px 0}
+.icon{font-size:27px}
+.hours{font-size:12px;color:var(--blue);font-weight:700}
+.topics{padding-left:19px;color:#526078;font-size:13px}
+.topics li{margin:5px 0}
+.workshop{grid-template-columns:repeat(2,1fr)}
+.workshop .card{border-left:4px solid var(--cyan)}
+.step{display:flex;gap:14px;margin:16px 0;align-items:flex-start}
+.num{background:#e8f1ff;color:var(--blue);width:34px;height:34px;flex:0 0 34px;border-radius:10px;text-align:center;font-weight:700;padding-top:4px}
+.step strong{color:var(--navy)}
+.prompt{background:#101d32;color:#e4edff;border-radius:14px;padding:20px;margin-top:18px;position:relative}
+.prompt pre{white-space:pre-wrap;word-break:break-word;font-family:monospace;font-size:13px;margin:8px 0 15px}
+.copy{background:#2563eb;color:white;border:0;border-radius:8px;padding:8px 14px;font-size:12px}
+.tools{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}
+.tools span{background:#edf4ff;color:#2455a0;padding:7px 12px;border-radius:8px;font-size:12px}
+.banner{background:linear-gradient(120deg,#e8f3ff,#e9fbff);border:1px solid #cde7f5;padding:27px;border-radius:18px}
+footer{background:var(--navy);color:#dbeafe;text-align:center;padding:30px 20px;font-size:12px}
+footer strong{color:white}
+@media(max-width:760px){.navlinks{display:none}.grid{grid-template-columns:1fr}.workshop{grid-template-columns:1fr}.hero{padding:55px 20px}.stats{gap:22px}section{margin:48px auto}}
+</style>
+</head>
+<body>
+<nav>
+<div class="navin">
+<div class="brand">AI <span>Multimedia</span> Learning Hub</div>
+<div class="navlinks">
+<a href="#about">เกี่ยวกับหลักสูตร</a>
+<a href="#lessons">บทเรียน</a>
+<a href="#workshop">Workshop</a>
+<a href="#film">AI Short Film</a>
+</div>
+</div>
+</nav>
+
+<header class="hero">
+<div class="heroin">
+<div class="tag">LEARNING HUB • 30 HOURS</div>
+<h1>สร้างสื่อมัลติมีเดีย<br>ด้วยพลัง Generative AI</h1>
+<p>เรียนรู้การใช้ AI ตั้งแต่การคิดไอเดีย เขียนบท สร้างภาพ สร้างวิดีโอ สร้างเสียง ตัดต่อ และเผยแพร่ผลงานจริง พร้อมลงมือทำตามขั้นตอน</p>
+<div class="actions">
+<a class="btn primary" href="#lessons">เริ่มต้นเรียนรู้ →</a>
+<a class="btn outline" href="#workshop">ดู Workshop</a>
+</div>
+<div class="stats">
+<div class="stat"><strong>30</strong><small>ชั่วโมงการเรียนรู้</small></div>
+<div class="stat"><strong>5</strong><small>หน่วยการเรียนรู้</small></div>
+<div class="stat"><strong>4</strong><small>Workshop ลงมือทำ</small></div>
+</div>
+</div>
+</header>
+
+<section id="about">
+<div class="eyebrow">ABOUT THE COURSE</div>
+<h2>เรียนรู้ตั้งแต่พื้นฐานจนสร้างผลงานได้จริง</h2>
+<p class="lead">หลักสูตรมุ่งพัฒนาทักษะการสร้างสื่อมัลติมีเดียด้วยเทคโนโลยี Generative AI เพื่อประยุกต์ใช้ในการประชาสัมพันธ์ การฝึกอบรม และการตลาด</p>
+<div class="banner">
+<strong>ผลลัพธ์ที่ผู้เรียนจะได้รับ</strong>
+<p>สามารถเขียน Prompt วางแผน Storyboard สร้างภาพและวิดีโอด้วย AI สร้างเสียง ตัดต่อคลิปสั้น เขียนข้อความประชาสัมพันธ์ และเผยแพร่ผลงานบนแพลตฟอร์มออนไลน์ได้</p>
+</div>
+</section>
+
+<section id="lessons">
+<div class="eyebrow">LEARNING MODULES</div>
+<h2>5 หน่วยการเรียนรู้</h2>
+<p class="lead">เลือกหัวข้อเพื่อศึกษาตามลำดับการเรียนรู้</p>
+<div class="grid">
+<div class="card"><div class="icon">🤖</div><div class="hours">หน่วยที่ 1 • 4 ชั่วโมง</div><h3>พื้นฐาน Generative AI</h3><p>เข้าใจหลักการและเลือกใช้เครื่องมือ AI ให้เหมาะกับงาน</p><ul class="topics"><li>รู้จัก Generative AI</li><li>การเลือกเครื่องมือสร้างภาพ เสียง และวิดีโอ</li><li>หลักการเขียน Prompt Engineering</li><li>ฝึกเขียน Prompt เบื้องต้น</li></ul></div>
+<div class="card"><div class="icon">📝</div><div class="hours">หน่วยที่ 2 • 6 ชั่วโมง</div><h3>ออกแบบสื่อมัลติมีเดีย</h3><p>เปลี่ยนไอเดียให้เป็นแผนการผลิตสื่อ</p><ul class="topics"><li>วิเคราะห์กลุ่มเป้าหมายและวัตถุประสงค์</li><li>ใช้ Claude / ChatGPT วางแผนและเขียนบท</li><li>สร้าง Storyboard และแบ่งฉาก</li><li>ออกแบบ Prompt ภาพและวิดีโอ</li></ul></div>
+<div class="card"><div class="icon">🎬</div><div class="hours">หน่วยที่ 3 • 14 ชั่วโมง</div><h3>ผลิตสื่อด้วย Generative AI</h3><p>ลงมือสร้างสื่อจากเครื่องมือ AI</p><ul class="topics"><li>สร้างภาพ ตัวละคร และฉาก</li><li>สร้างวิดีโอด้วย Google Flow</li><li>สร้างเสียงและเสียงตัวละคร</li><li>ตัดต่อด้วย CapCut</li></ul></div>
+<div class="card"><div class="icon">📊</div><div class="hours">หน่วยที่ 4 • 5 ชั่วโมง</div><h3>วิเคราะห์และเผยแพร่สื่อ</h3><p>ตรวจสอบคุณภาพและเผยแพร่ผลงาน</p><ul class="topics"><li>ตรวจสอบเนื้อหาและข้อเท็จจริง</li><li>ปรับสัดส่วนวิดีโอแต่ละแพลตฟอร์ม</li><li>เขียน Caption และ Hashtag</li><li>เผยแพร่และวิเคราะห์ผลเบื้องต้น</li></ul></div>
+<div class="card"><div class="icon">⚖️</div><div class="hours">หน่วยที่ 5 • 1 ชั่วโมง</div><h3>จริยธรรมและการใช้ AI</h3><p>สร้างสื่ออย่างรับผิดชอบและถูกต้อง</p><ul class="topics"><li>ลิขสิทธิ์ภาพ เสียง และวิดีโอ</li><li>การขออนุญาตใช้เสียงและใบหน้า</li><li>การตรวจสอบข้อมูล</li><li>นโยบายแพลตฟอร์มออนไลน์</li></ul></div>
+<div class="card"><div class="icon">🏆</div><div class="hours">COURSE OUTCOME</div><h3>ผลงานเมื่อจบหลักสูตร</h3><p>ผู้เรียนสร้างวิดีโอได้อย่างน้อย 1 ผลงาน พร้อมปรับรูปแบบและเตรียมเผยแพร่จริง</p></div>
+</div>
+</section>
+
+<section id="workshop">
+<div class="eyebrow">PRACTICAL WORKSHOP</div>
+<h2>4 Workshop ลงมือสร้างผลงาน</h2>
+<p class="lead">ฝึกปฏิบัติจากโจทย์ที่สามารถนำไปใช้จริง</p>
+<div class="grid workshop">
+<div class="card"><div class="icon">📣</div><h3>01 วิดีโอประชาสัมพันธ์หลักสูตร</h3><p>สร้างวิดีโอแนะนำหลักสูตร ความยาว 30–45 วินาที</p></div>
+<div class="card"><div class="icon">🛍️</div><h3>02 วิดีโอสินค้าชุมชน</h3><p>นำเสนอจุดเด่นสินค้าและสร้างเรื่องราว ความยาว 15–30 วินาที</p></div>
+<div class="card"><div class="icon">📚</div><h3>03 วิดีโอให้ความรู้</h3><p>เปลี่ยนเอกสารฝึกอบรมเป็นสื่อวิดีโอ ความยาว 30–60 วินาที</p></div>
+<div class="card"><div class="icon">🎥</div><h3>04 ภาพยนตร์สั้นด้วย AI</h3><p>สร้างเรื่องราว ตัวละคร เสียง ฉาก และตัดต่อ ความยาว 30–60 วินาที</p></div>
+</div>
+</section>
+
+<section id="film">
+<div class="eyebrow">FEATURED WORKSHOP</div>
+<h2>AI Short Film Studio</h2>
+<p class="lead">เส้นทางการสร้างภาพยนตร์สั้นด้วย AI ตั้งแต่เริ่มคิดเรื่องจนได้วิดีโอสำเร็จ</p>
+<div class="card">
+<div class="step"><div class="num">1</div><div><strong>คิดเรื่องและเขียนบท</strong><br><span>ใช้ ChatGPT หรือ Claude สร้างแนวคิด ตัวละคร บทสนทนา และแบ่งฉาก</span></div></div>
+<div class="step"><div class="num">2</div><div><strong>สร้างเสียงตัวละคร</strong><br><span>ใช้ ElevenLabs สร้างเสียงพูดและกำหนดอารมณ์ของตัวละคร</span></div></div>
+<div class="step"><div class="num">3</div><div><strong>เตรียมไฟล์เสียง</strong><br><span>นำเสียงไปจัดการและเตรียมใช้งานใน SayToWords ตามขั้นตอนของเครื่องมือ</span></div></div>
+<div class="step"><div class="num">4</div><div><strong>สร้างภาพและ Prompt วิดีโอ</strong><br><span>ใช้ ChatGPT ช่วยออกแบบภาพอ้างอิง ตัวละคร ฉาก และคำสั่งสร้างวิดีโอ</span></div></div>
+<div class="step"><div class="num">5</div><div><strong>สร้างวิดีโอด้วย Google Flow</strong><br><span>นำ Prompt และภาพอ้างอิงไปสร้างฉาก ควบคุมกล้อง แสง และการเคลื่อนไหว</span></div></div>
+<div class="step"><div class="num">6</div><div><strong>ตัดต่อด้วย CapCut</strong><br><span>เรียงฉาก ใส่เสียง บทพูด เอฟเฟกต์ คำบรรยาย และส่งออกเป็นวิดีโอ</span></div></div>
+</div>
+
+<div class="prompt">
+<strong>ตัวอย่าง Prompt สำหรับเริ่มต้นเขียนบท</strong>
+<pre id="sample">คุณคือนักเขียนบทภาพยนตร์มืออาชีพ ช่วยสร้างเรื่องสั้นความยาว 60 วินาที แนว [ระบุแนวเรื่อง] มีตัวละครหลัก 2 คน แบ่งเป็น 6 ฉาก แต่ละฉากระบุสถานที่ การกระทำ บทพูด อารมณ์ตัวละคร มุมกล้อง และเสียงประกอบ เนื้อเรื่องต้องมีจุดเริ่มต้น จุดขัดแย้ง และบทสรุปที่น่าจดจำ</pre>
+<button class="copy" onclick="copyPrompt()">คัดลอก Prompt</button>
+</div>
+</section>
+
+<section>
+<div class="eyebrow">AI TOOLBOX</div>
+<h2>เครื่องมือที่ใช้ในการเรียน</h2>
+<p class="lead">เครื่องมือ AI และโปรแกรมสำหรับสร้างสื่อมัลติมีเดีย</p>
+<div class="tools">
+<span>ChatGPT</span><span>Claude</span><span>Google Flow</span><span>SayToWords</span><span>ElevenLabs</span><span>AI Image Generator</span><span>CapCut</span><span>Facebook</span><span>TikTok</span><span>YouTube</span>
+</div>
+</section>
+
+<section>
+<div class="banner">
+<div class="eyebrow">READY TO CREATE?</div>
+<h2>เริ่มต้นสร้างสื่อด้วย AI ไปด้วยกัน</h2>
+<p>เรียนรู้ ทดลอง ลงมือทำ และต่อยอดทักษะสู่การทำงานจริง</p>
+<strong>สถาบันพัฒนาฝีมือแรงงาน 11 สุราษฎร์ธานี</strong>
+</div>
+</section>
+
+<footer>
+<strong>AI Multimedia Learning Hub</strong><br>
+สถาบันพัฒนาฝีมือแรงงาน 11 สุราษฎร์ธานี<br><br>
+เอกสารใช้สำหรับการฝึกอบรมแจกฟรี โดย อ.คณิต ทองวิลัย สพร.11 สฎ
+</footer>
+<script>
+function copyPrompt(){
+ const text=document.getElementById('sample').innerText;
+ if(navigator.clipboard && window.isSecureContext){
+  navigator.clipboard.writeText(text).then(()=>alert('คัดลอก Prompt เรียบร้อยแล้ว'));
+ }else{
+  const area=document.createElement('textarea');
+  area.value=text;document.body.appendChild(area);area.select();
+  document.execCommand('copy');area.remove();alert('คัดลอก Prompt เรียบร้อยแล้ว');
+ }
+}
+</script>
+</body>
+</html>
