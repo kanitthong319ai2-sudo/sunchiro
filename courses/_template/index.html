@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ชื่อหลักสูตร — Landing page (ตัวอย่าง)</title>
+</head>
+<body>
+<!-- คัดลอกโฟลเดอร์ _template ไปเป็น courses/<slug>/ แล้วแทนที่เนื้อหาด้วย Landing page ที่ทำไว้ -->
+
+<!-- ส่วนสาธารณะ: ใครก็เห็น -->
+<header>
+  <h1>ชื่อหลักสูตร</h1>
+  <p>คำอธิบายหลักสูตรสำหรับทุกคน</p>
+</header>
+
+<!-- ผู้ที่ยังไม่มีสิทธิ์ -->
+<section data-guest-only>
+  <p>กรุณาเข้าสู่ระบบด้วยบัญชีที่ลงทะเบียนหลักสูตรนี้เพื่อเข้าเรียน</p>
+  <a data-login-link href="../../">เข้าสู่ระบบ</a>
+  <p id="guard-reason"></p>
+</section>
+
+<!-- ผู้ที่ลงทะเบียนแล้ว (หรือผู้สอน/แอดมิน) -->
+<section data-members-only>
+  <h2>เนื้อหาสำหรับผู้เรียน</h2>
+  <p>ใส่ลิงก์บทเรียน วิดีโอ เอกสาร ฯลฯ ที่นี่</p>
+</section>
+
+<script type="module" src="../../course-guard.js"></script>
+<script>
+  document.addEventListener('course-guard', (e) => {
+    const el = document.getElementById('guard-reason');
+    if (el && !e.detail.member) el.textContent = e.detail.reason;
+  });
+</script>
+</body>
+</html>

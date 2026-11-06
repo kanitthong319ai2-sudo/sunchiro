@@ -1,5 +1,16 @@
 # Release Notes — AI Multimedia Learning Hub
 
+## v1.6 (2026-11-06) — Landing page แยกต่อหลักสูตร + ตัวเช็กสิทธิ์
+
+แนวทาง: Hub ทำแค่ล็อกอิน/จัดการสมาชิก ส่วน Landing page ของแต่ละหลักสูตรทำแยกแล้วอัปโหลดที่ `courses/<slug>/index.html`
+
+- `index.html`: หน้า "หลักสูตรของฉัน" ของผู้เรียนมีปุ่ม "เข้าเรียน (Landing page)" เปิด `courses/<slug>/`
+- `course-guard.js` (ใหม่): แปะใน Landing page เพื่อเช็กล็อกอิน + การลงทะเบียน (ผู้สอน/แอดมินผ่านเสมอ)
+  - `data-members-only` แสดงเฉพาะสมาชิกหลักสูตร, `data-guest-only` แสดงเฉพาะผู้ไม่มีสิทธิ์, `data-login-link` ชี้กลับ Hub
+  - ใช้ session เดียวกับ Hub (origin เดียวกัน)
+- `courses/_template/index.html` (ใหม่): ต้นแบบ Landing page
+- ข้อจำกัด: เป็นการซ่อน/แสดงบนหน้าเว็บ ไฟล์บน GitHub Pages ยังเปิดตรงๆ ได้ เนื้อหาที่ต้องปกป้องจริงให้ดึงจาก Supabase (RLS)
+
 ## v1.5 (2026-11-05) — รองรับ Google Gemini (ฟรี)
 
 - `generate-course/index.ts`: เลือกผู้ให้บริการ AI จาก Secrets
